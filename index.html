@@ -5,7 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
-    <h1>pseudoname's website</h1>
-    <p>work in progress</p>
+    <h1 id="title">pseudoname's website</h1>
+    <p>hover over the title</p>
   </body>
+  <script>
+    const $ = id => document.getElementById(id);
+    function genRandomColorString() {
+      const letters = "0123456789abcdef";
+      let str = "#";
+      for (let i = 0; i < 6; ++i) {
+        str += letters[Math.random()*16|0];
+      }
+      return str;
+    }
+    const title = $("title");
+    title.addEventListener("pointerover", e => {
+      title.style.color = genRandomColorString();
+    })
+  </script>
 </html>
