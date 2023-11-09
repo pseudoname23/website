@@ -1,0 +1,67 @@
+body {
+  background-color: #446;
+}
+a {
+  color: #AAF;
+}
+p span:not(:first-child) {
+  border-left: 2px solid #DDD;
+  padding: 0px 0px 5px 10px;
+  margin: 0px 0px 0px 5px;
+}
+h1 {
+  text-align: center;
+  font-family: Trebuchet MS;
+  font-weight: bold;
+  font-size: 40px;
+}
+h2 {
+  text-align: center;
+  font-family: Trebuchet MS;
+  font-weight: normal;
+  font-size: 35px;
+  text-decoration: underline;
+}
+hr {
+  height: 2px;
+  border-width: 0;
+  background-color: #000;
+  opacity: 50%;
+}
+li {
+  font-family: Trebuchet MS;
+  font-size: 20px;
+}
+b {
+  font-weight: 999;
+}
+i {
+  font-style: italic;
+  font-weight: lighter;
+}
+#content {
+  border: 3px solid #110;
+  margin: 50px auto auto auto;
+  padding: 0px 15px 0px 15px;
+  background-color: #BBD;
+}
+.description {
+  font-family: Trebuchet MS;
+  font-size: 18px;
+}
+#nav {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-color: #333;
+  text-align: center;
+}
+.navlink {
+  font-family: Verdana;
+  font-size: 20px;
+  margin: 10px 20px 10px 20px;
+  text-align: center;
+}
+.hiddenBeforeLoad {
+  display: none;
+}
