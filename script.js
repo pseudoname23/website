@@ -82,13 +82,12 @@ async function splashText() {
     "play infinitode 2",
     "Why are you like this?",
     "H̷̞̋i̴̻̿,̴̜̏ ̸̖͑Ỉ̴͜'̴̞͑m̸̪̓ ̵̫̏p̸̩̑ṡ̴ͅę̶̐u̴̼͒d̴̺̿ö̷́ͅń̷̦a̴̹͘m̶͊ͅe̸̱̍.̴͉́",
-    "for (;;) {console.log('L');};",
     ".emanoduesp m'I ,iH",
     "You write an about me then, if you're so goddamn smart."
   ];
-  var eventNumber = Math.floor(Math.random() * 9);
+  var eventNumber = Math.floor(Math.random() * 8);
   switch (eventNumber) {
-    case 8:
+    case 7:
       for (let i = 0; i < 80; ++i) {
         changeColor("title");
         await sleep(25);
