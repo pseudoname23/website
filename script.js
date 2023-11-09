@@ -78,9 +78,9 @@ async function splashText() {
   var title = document.getElementById("title");
   var tempText = [
     "What?",
-    "Quit clicking me",
+    "Quit clicking me, weirdo.",
     "play infinitode 2",
-    "Why are you like this",
+    "Why are you like this?",
     "H̷̞̋i̴̻̿,̴̜̏ ̸̖͑Ỉ̴͜'̴̞͑m̸̪̓ ̵̫̏p̸̩̑ṡ̴ͅę̶̐u̴̼͒d̴̺̿ö̷́ͅń̷̦a̴̹͘m̶͊ͅe̸̱̍.̴͉́",
     "for (;;) {console.log('L');};",
     ".emanoduesp m'I ,iH",
@@ -97,7 +97,7 @@ async function splashText() {
       break;
     default:
       title.innerText = tempText[eventNumber];
-      await sleep(1500);
+      await sleep(2000);
       title.innerText = "Hi, I'm pseudoname.";
   }
 } // Really dumb and long function
