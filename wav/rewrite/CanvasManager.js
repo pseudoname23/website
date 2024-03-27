@@ -46,15 +46,15 @@ class CanvasManager {
       mgmt.canvas.onresize();
     }, {once: true})
 
-    this.nodeDOM.addEventListener("pointermove", e => {
+    this.cursorDOM.addEventListener("pointermove", e => {
       this.onpointermove(e);
     });
 
-    this.nodeDOM.addEventListener("wheel", e => {
+    this.cursorDOM.addEventListener("wheel", e => {
       this.onwheel(e);
     });
 
-    this.nodeDOM.addEventListener("contextmenu", e => e.preventDefault());
+    this.cursorDOM.addEventListener("contextmenu", e => e.preventDefault());
   }
 
 
