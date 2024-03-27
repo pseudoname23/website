@@ -231,6 +231,8 @@ class CanvasManager {
     const parentRect = this.nodeDOM.parentElement.getBoundingClientRect();
     this.nodeDOM.height = parentRect.height + 10;
     this.nodeDOM.width = parentRect.width + 10;
+    this.cursorDOM.height = parentRect.height + 10;
+    this.cursorDOM.width = parentRect.width + 10;
     this.drawAll();
   }
 
