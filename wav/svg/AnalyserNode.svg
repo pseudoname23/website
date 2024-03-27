@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <rect x="0" y="0" width="200" height="200" style="fill: rgb(50, 50, 60);"/>
-  <path style="fill: rgb(216, 216, 216);" d="M 20 100 C 20 100 91 20 180 101"/>
-  <path style="fill: rgb(216, 216, 216);" d="M 20 99 C 20 100 91 180 180 100"/>
-  <ellipse style="fill: rgb(50, 50, 60);" cx="100" cy="100" rx="20" ry="20"/>
+  <rect x="2" y="2" width="196" height="196" fill="rgb(50, 50, 60)" stroke="black" stroke-width="2" />
+  <path fill="rgb(216, 216, 216)" d="M 20 100 C 20 100 91 20 180 101"/>
+  <path fill="rgb(216, 216, 216)" d="M 20 99 C 20 100 91 180 180 100"/>
+  <circle fill="rgb(50, 50, 60)" cx="100" cy="100" r="20"/>
 </svg>
