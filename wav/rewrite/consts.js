@@ -65,7 +65,7 @@ const kHashStore = {
 };
 const mgmt = {};
 const kExtraSVGs = [
-  "_arrowcircle"
+  "arrowcircle"
 ];
 
 const clamp = (x, lo, hi) => Math.max(Math.min(x, hi), lo);
