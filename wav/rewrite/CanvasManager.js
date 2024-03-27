@@ -5,6 +5,10 @@ class CanvasManager {
     tabinator.tabs[4].appendChild(this.nodeDOM);
     this.nodes = {};
 
+    this.cursorDOM = genericElem("canvas");
+    this.cursorCtx = this.cursorDOM.getContext("2d");
+    tabinator.tabs[4].appendChild(this.cursorDOM);
+
     // Collection of coordinates measured in pixels
     this.px = {
       mouseX: 0,
@@ -117,7 +121,7 @@ class CanvasManager {
 
 
   drawCursorTracker() {
-    this.nodeCtx.fillRect(
+    this.cursorCtx.fillRect(
       this.px.mouseX, 
       this.px.mouseY, 
       10 * this.pixelsPerUnit, 
@@ -126,7 +130,7 @@ class CanvasManager {
   }
 
   clearCursorTracker() {
-    this.nodeCtx.clearRect(
+    this.cursorCtx.clearRect(
       this.px.mouseX - 1, 
       this.px.mouseY - 1, 
       (10 * this.pixelsPerUnit) + 2, 
@@ -174,6 +178,7 @@ class CanvasManager {
 
   clearAll() {
     this.nodeCtx.clearRect(0, 0, this.nodeDOM.width, this.nodeDOM.height);
+    this.cursorCtx.clearRect(0, 0, this.nodeDOM.width, this.nodeDOM.height);
   }
 
   drawAll() {
