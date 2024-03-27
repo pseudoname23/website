@@ -29,6 +29,13 @@ class CanvasManager {
       svg.src = `svg/${type}.svg`;
       this.images[type] = svg;
     }
+    for (const name of kExtraSVGs) {
+      const svg = document.createElement("img");
+      svg.src = `svg/${name}.svg`;
+      this.images[name] = svg;
+    }
+
+    
 
     // resize canvas to fit screen when first visible
     tabinator.leaves[4].addEventListener("pointerup", () => {

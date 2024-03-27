@@ -64,6 +64,9 @@ const kHashStore = {
   threshold:'T'
 };
 const mgmt = {};
+const kExtraSVGs = [
+  "_arrowcircle"
+];
 
 const clamp = (x, lo, hi) => Math.max(Math.min(x, hi), lo);
 const lastCharOf = str => str.substring(str.length-1);
