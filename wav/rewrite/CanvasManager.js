@@ -1,18 +1,9 @@
 class CanvasManager {
   constructor() {
-    this.canvases = ["asdfghj"];
-    function newCanvas(name) {
-      alert(this.canvases);
-    }
-    newCanvas()
-    this.nodeDOM = genericElem("canvas");
-    this.nodeCtx = this.nodeDOM.getContext("2d");
-    tabinator.tabs[4].appendChild(this.nodeDOM);
+    this.canvases = {};
+    this.newCanvas("node");
+    this.newCanvas("cursor");
     this.nodes = {};
-
-    this.cursorDOM = genericElem("canvas");
-    this.cursorCtx = this.cursorDOM.getContext("2d");
-    tabinator.tabs[4].appendChild(this.cursorDOM);
 
     // Collection of coordinates measured in pixels
     this.px = {
@@ -51,18 +42,24 @@ class CanvasManager {
       mgmt.canvas.onresize();
     }, {once: true})
 
-    this.cursorDOM.addEventListener("pointermove", e => {
+    this.canvases.cursor.dom.addEventListener("pointermove", e => {
       this.onpointermove(e);
     });
 
-    this.cursorDOM.addEventListener("wheel", e => {
+    this.canvases.cursor.dom.addEventListener("wheel", e => {
       this.onwheel(e);
     });
 
-    this.cursorDOM.addEventListener("contextmenu", e => e.preventDefault());
+    this.canvases.cursor.dom.addEventListener("contextmenu", e => e.preventDefault());
   }
 
 
+  newCanvas(name) {
+    this.canvases[name] = {};
+    this.canvases[name].dom = genericElem("canvas");
+    this.canvases[name].ctx = this.canvases[name].dom.getContext("2d");
+    tabinator.tabs[4].appendChild(this.canvases[name].dom);
+  }
 
 
 
@@ -98,7 +95,7 @@ class CanvasManager {
     const node = this.nodes[id];
     if (!node) return;
     if (!this.images[node.node.constructor.name]) return;
-    this.nodeCtx.drawImage(
+    this.canvases.node.ctx.drawImage(
       this.images[node.node.constructor.name],
       node.px.x,
       node.px.y,
@@ -126,7 +123,7 @@ class CanvasManager {
 
 
   drawCursorTracker() {
-    this.cursorCtx.fillRect(
+    this.canvases.cursor.ctx.fillRect(
       this.px.mouseX, 
       this.px.mouseY, 
       10 * this.pixelsPerUnit, 
@@ -135,7 +132,7 @@ class CanvasManager {
   }
 
   clearCursorTracker() {
-    this.cursorCtx.clearRect(
+    this.canvases.cursor.ctx.clearRect(
       this.px.mouseX - 1, 
       this.px.mouseY - 1, 
       (10 * this.pixelsPerUnit) + 2, 
@@ -148,13 +145,13 @@ class CanvasManager {
 
 
   drawCenterTracker() {
-    this.nodeCtx.fillRect(
+    this.canvases.node.ctx.fillRect(
       this.unitXToPixelX(-2), 
       this.unitYToPixelY(-10), 
       this.pixelsPerUnit * 4,
       this.pixelsPerUnit * 20
     );
-    this.nodeCtx.fillRect(
+    this.canvases.node.ctx.fillRect(
       this.unitXToPixelX(-10), 
       this.unitYToPixelY(-2), 
       this.pixelsPerUnit * 20,
@@ -163,13 +160,13 @@ class CanvasManager {
   }
 
   clearCenterTracker() {
-    this.nodeCtx.clearRect(
+    this.canvases.node.ctx.clearRect(
       this.unitXToPixelX(-2) - 1,
       this.unitYToPixelY(-10) - 1, 
       this.pixelsPerUnit * 4 + 2,
       this.pixelsPerUnit * 20 + 2
     );
-    this.nodeCtx.clearRect(
+    this.canvases.node.ctx.clearRect(
       this.unitXToPixelX(-10) - 1,
       this.unitYToPixelY(-2) - 1,
       this.pixelsPerUnit * 20 + 2,
@@ -182,8 +179,8 @@ class CanvasManager {
 
 
   clearAll() {
-    this.nodeCtx.clearRect(0, 0, this.nodeDOM.width, this.nodeDOM.height);
-    this.cursorCtx.clearRect(0, 0, this.nodeDOM.width, this.nodeDOM.height);
+    this.canvases.node.ctx.clearRect(0, 0, this.canvases.node.dom.width, this.canvases.node.dom.height);
+    this.canvases.cursor.ctx.clearRect(0, 0, this.canvases.node.dom.width, this.canvases.node.dom.height);
   }
 
   drawAll() {
@@ -233,11 +230,11 @@ class CanvasManager {
   
   onresize() {
     this.clearAll();
-    const parentRect = this.nodeDOM.parentElement.getBoundingClientRect();
-    this.nodeDOM.height = parentRect.height + 10;
-    this.nodeDOM.width = parentRect.width + 10;
-    this.cursorDOM.height = parentRect.height + 10;
-    this.cursorDOM.width = parentRect.width + 10;
+    const parentRect = this.canvases.node.dom.parentElement.getBoundingClientRect();
+    this.canvases.node.dom.height = parentRect.height + 10;
+    this.canvases.node.dom.width = parentRect.width + 10;
+    this.canvases.cursor.dom.height = parentRect.height + 10;
+    this.canvases.cursor.dom.width = parentRect.width + 10;
     this.drawAll();
   }
 
