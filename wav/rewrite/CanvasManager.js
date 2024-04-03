@@ -1,5 +1,10 @@
 class CanvasManager {
   constructor() {
+    this.canvases = ["asdfghj"];
+    function newCanvas(name) {
+      alert(this.canvases);
+    }
+    newCanvas()
     this.nodeDOM = genericElem("canvas");
     this.nodeCtx = this.nodeDOM.getContext("2d");
     tabinator.tabs[4].appendChild(this.nodeDOM);
