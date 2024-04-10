@@ -1,7 +1,7 @@
-- In CanvasManager, centralize canvas creation into an array of objects with DOM and Ctx properties
 - Create SVGs for the rest of the nodes
 - Create a map of which nodes need which params need which circle things
 - Create additional SVGs for params and settings and stuff
 - Phase out Array.prototype.remove
 - Write CanvasManager.clearNode
 - Implement connecting nodes
+- Update BiquadFilterNode sprite because it looks fugly
