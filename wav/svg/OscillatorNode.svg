@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"></svg>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+  <defs></defs>
+  <rect x="2" y="2" width="196" height="196" fill="rgb(50, 50, 60)" stroke="black" stroke-width="2"></rect>
+  <polygon style="stroke: rgb(0, 0, 0); stroke-width: 4px;" points="100 70 100 130 60 115 60 85"></polygon>
+  <rect x="102" y="68" width="96" height="64" fill="rgb(200,200,200)" stroke="black" stroke-width="2"></rect>
+  <polygon style="stroke: rgb(200, 200, 200); fill:rgb(200,200,200); stroke-width: 4px;" points="102 72 102 128 75 113 75 87"></polygon>
+  <path style="fill: rgba(216, 216, 216, 0); stroke: rgb(0, 0, 0);" d="M 69.495 100 C 100 125.949 132.364 113.233 139.411 100 C 151.621 85 175 76.02 198 100" stroke-width="6"></path>
+</svg>
