@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"></svg>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+  <rect x="2" y="2" width="196" height="196" fill="rgb(50, 50, 60)" stroke="black" stroke-width="2"></rect>
+  <rect x="2" y="70" width="196" height="60" fill="rgb(216, 216, 216)" stroke="black" stroke-width="2"></rect>
+  <line style="stroke: rgb(0, 0, 0); stroke-width: 4px;" x1="2" y1="85" x2="100" y2="85"></line>
+  <line style="stroke: rgb(0, 0, 0); stroke-width: 4px;" x1="2" y1="100" x2="100" y2="100"></line>
+  <line style="stroke: rgb(0, 0, 0); stroke-width: 4px;" x1="2" y1="115" x2="198" y2="115"></line>
+  <line style="stroke: rgb(150, 150, 150); stroke-width: 4px;" x1="198" y1="100" x2="100" y2="100"></line>
+  <line style="stroke: rgb(100, 100, 100); stroke-width: 8px;" x1="100" y1="129" x2="100" y2="71"></line>
+</svg>
