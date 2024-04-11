@@ -98,7 +98,7 @@ class CanvasManager {
     const lineInterval = this.pixelsPerUnit * 10;
 
     const hStartOffset = Math.sign(this.su.top) === 1 ? Math.ceil(this.su.top/10)*10 - this.su.top : Math.abs(this.su.top % 10);
-    let hLineTarget = Math.floor((this.canvases.node.height - hStartOffset * this.pixelsPerUnit) / lineInterval);
+    let hLineTarget = Math.floor((this.canvases.node.dom.height - hStartOffset * this.pixelsPerUnit) / lineInterval);
     console.log(hLineTarget);
     while (hLineTarget > 0) {
       let lineHeight = hStartOffset * this.pixelsPerUnit + hLineTarget * lineInterval;
