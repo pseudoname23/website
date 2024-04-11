@@ -99,7 +99,7 @@ class CanvasManager {
 
     const hStartOffset = Math.sign(this.su.top) === 1 ? Math.ceil(this.su.top/10)*10 - this.su.top : Math.abs(this.su.top % 10);
     let hLineTarget = Math.floor((this.canvases.node.dom.height - hStartOffset * this.pixelsPerUnit) / lineInterval);
-    console.log(hLineTarget);
+    console.log(hStartOffset * this.pixelsPerUnit + hLineTarget * lineInterval);
     while (hLineTarget > 0) {
       let lineHeight = hStartOffset * this.pixelsPerUnit + hLineTarget * lineInterval;
       this.canvases.background.ctx.moveTo(0, lineHeight);
