@@ -99,7 +99,7 @@ class CanvasManager {
 
     const hStartOffset = Math.sign(this.su.top) === 1 ? Math.ceil(this.su.top/10)*10 - this.su.top : Math.abs(this.su.top % 10);
     let hLineTarget = Math.floor((this.canvases.node.dom.height - hStartOffset * this.pixelsPerUnit) / lineInterval);
-    while (hLineTarget > 0) {
+    while (hLineTarget > -1) {
       let lineHeight = hStartOffset * this.pixelsPerUnit + hLineTarget * lineInterval;
       this.canvases.background.ctx.moveTo(0, lineHeight);
       this.canvases.background.ctx.lineTo(this.canvases.node.dom.width, lineHeight);
@@ -108,7 +108,7 @@ class CanvasManager {
 
     const vStartOffset = Math.sign(this.su.left) === 1 ? Math.ceil(this.su.left/10)*10 - this.su.left : Math.abs(this.su.left % 10);
     let vLineTarget = Math.floor((this.canvases.node.dom.width - vStartOffset * this.pixelsPerUnit) / lineInterval);
-    while (vLineTarget > 0) {
+    while (vLineTarget > -1) {
       let linePos = vStartOffset * this.pixelsPerUnit + vLineTarget * lineInterval;
       this.canvases.background.ctx.moveTo(linePos, 0);
       this.canvases.background.ctx.lineTo(linePos, this.canvases.node.dom.height);
