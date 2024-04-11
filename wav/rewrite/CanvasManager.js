@@ -92,8 +92,8 @@ class CanvasManager {
 
   drawGrid() {
     // if this is broken consider the helper functions above
-    this.canvases.background.ctx.strokeStyle = "rgba(0,0,0,0.3)";
-    this.canvases.background.ctx.lineWidth = 0.5;
+    this.canvases.background.ctx.strokeStyle = "rgb(0,0,0)";
+    this.canvases.background.ctx.lineWidth = 2;
     this.canvases.background.ctx.beginPath();
     const lineInterval = this.pixelsPerUnit * 10;
 
