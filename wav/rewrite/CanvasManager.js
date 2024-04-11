@@ -1,7 +1,7 @@
 class CanvasManager {
   constructor() {
     this.canvases = {};
-    this.newCanvas("background");
+    this.newCanvas("grid");
     this.newCanvas("node");
     this.newCanvas("cursor");
     this.nodes = {};
@@ -91,34 +91,33 @@ class CanvasManager {
 
 
   drawGrid() {
-    // if this is broken consider the helper functions above
-    this.canvases.background.ctx.strokeStyle = "rgba(0,0,0,0.5)";
-    this.canvases.background.ctx.lineWidth = 0.5;
-    this.canvases.background.ctx.beginPath();
-    const lineInterval = this.pixelsPerUnit * 10;
+    this.canvases.grid.ctx.strokeStyle = "rgba(0,0,0,0.5)";
+    this.canvases.grid.ctx.lineWidth = 0.5;
+    this.canvases.grid.ctx.beginPath();
+    const lineInterval = this.pixelsPerUnit * 25;
 
-    const hStartOffset = Math.sign(this.su.top) === 1 ? Math.ceil(this.su.top/10)*10 - this.su.top : Math.abs(this.su.top % 10);
+    const hStartOffset = Math.sign(this.su.top) === 1 ? Math.ceil(this.su.top/25)*25 - this.su.top : Math.abs(this.su.top % 25);
     let hLineTarget = Math.floor((this.canvases.node.dom.height - hStartOffset * this.pixelsPerUnit) / lineInterval);
     while (hLineTarget > -1) {
       let lineHeight = hStartOffset * this.pixelsPerUnit + hLineTarget * lineInterval;
-      this.canvases.background.ctx.moveTo(0, lineHeight);
-      this.canvases.background.ctx.lineTo(this.canvases.node.dom.width, lineHeight);
+      this.canvases.grid.ctx.moveTo(0, lineHeight);
+      this.canvases.grid.ctx.lineTo(this.canvases.node.dom.width, lineHeight);
       --hLineTarget;
     }
 
-    const vStartOffset = Math.sign(this.su.left) === 1 ? Math.ceil(this.su.left/10)*10 - this.su.left : Math.abs(this.su.left % 10);
+    const vStartOffset = Math.sign(this.su.left) === 1 ? Math.ceil(this.su.left/25)*25 - this.su.left : Math.abs(this.su.left % 25);
     let vLineTarget = Math.floor((this.canvases.node.dom.width - vStartOffset * this.pixelsPerUnit) / lineInterval);
     while (vLineTarget > -1) {
       let linePos = vStartOffset * this.pixelsPerUnit + vLineTarget * lineInterval;
-      this.canvases.background.ctx.moveTo(linePos, 0);
-      this.canvases.background.ctx.lineTo(linePos, this.canvases.node.dom.height);
+      this.canvases.grid.ctx.moveTo(linePos, 0);
+      this.canvases.grid.ctx.lineTo(linePos, this.canvases.node.dom.height);
       --vLineTarget;
     }
 
-    this.canvases.background.ctx.stroke();
+    this.canvases.grid.ctx.stroke();
   }
   clearGrid() {
-    this.canvases.background.ctx.clearRect(0, 0, this.canvases.node.dom.width, this.canvases.node.dom.height);
+    this.canvases.grid.ctx.clearRect(0, 0, this.canvases.node.dom.width, this.canvases.node.dom.height);
   }
 
 
@@ -277,8 +276,8 @@ class CanvasManager {
     this.canvases.node.dom.width = parentRect.width + 10;
     this.canvases.cursor.dom.height = parentRect.height + 10;
     this.canvases.cursor.dom.width = parentRect.width + 10;
-    this.canvases.background.dom.height = parentRect.height + 10;
-    this.canvases.background.dom.width = parentRect.width + 10;
+    this.canvases.grid.dom.height = parentRect.height + 10;
+    this.canvases.grid.dom.width = parentRect.width + 10;
     this.drawAll();
   }
 
