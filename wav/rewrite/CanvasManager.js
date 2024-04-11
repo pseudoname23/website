@@ -1,6 +1,7 @@
 class CanvasManager {
   constructor() {
     this.canvases = {};
+    this.newCanvas("background");
     this.newCanvas("node");
     this.newCanvas("cursor");
     this.nodes = {};
@@ -50,6 +51,14 @@ class CanvasManager {
       this.onwheel(e);
     });
 
+    this.canvases.cursor.dom.addEventListener("pointerdown", e => {
+      this.onpointerdown(e);
+    });
+
+    this.canvases.cursor.dom.addEventListener("pointerup", e => {
+      this.onpointerup(e);
+    });
+
     this.canvases.cursor.dom.addEventListener("contextmenu", e => e.preventDefault());
   }
 
@@ -80,6 +89,28 @@ class CanvasManager {
   }
 
 
+
+  drawGrid() {
+    // if this is broken consider the helper functions above
+    this.canvases.background.ctx.strokeStyle = "rgba(0,0,0,0.3)";
+    this.canvases.background.ctx.lineWidth = 0.5;
+    this.canvases.background.ctx.beginPath();
+    const lineInterval = this.pixelsPerUnit * 10;
+
+    const hStartOffset = Math.sign(this.su.top) === 1 ? Math.ceil(this.su.top/10)*10 - this.su.top : Math.abs(this.su.top % 10);
+    let hLineTarget = Math.floor((this.canvases.node.height - hStartOffset * this.pixelsPerUnit) / lineInterval);
+    while (hLineTarget > 0) {
+      let lineHeight = hStartOffset * this.pixelsPerUnit + hLineTarget * lineInterval;
+      this.canvases.background.ctx.moveTo(0, lineHeight);
+      this.canvases.background.ctx.lineTo(this.canvases.node.width, lineHeight);
+      --hLineTarget;
+    }
+
+    this.canvases.background.ctx.stroke();
+  }
+  clearGrid() {
+
+  }
 
 
 
@@ -235,6 +266,8 @@ class CanvasManager {
     this.canvases.node.dom.width = parentRect.width + 10;
     this.canvases.cursor.dom.height = parentRect.height + 10;
     this.canvases.cursor.dom.width = parentRect.width + 10;
+    this.canvases.background.dom.height = parentRect.height + 10;
+    this.canvases.background.dom.width = parentRect.width + 10;
     this.drawAll();
   }
 
@@ -247,6 +280,14 @@ class CanvasManager {
     this.su.mouseY = this.pixelYToUnitY(e.offsetY);
 
     this.drawCursorTracker();
+  }
+
+  onpointerup(e){
+
+  }
+
+  onpointerdown(e){
+
   }
 
   onwheel(e) {
