@@ -103,7 +103,7 @@ class CanvasManager {
     while (hLineTarget > 0) {
       let lineHeight = hStartOffset * this.pixelsPerUnit + hLineTarget * lineInterval;
       this.canvases.background.ctx.moveTo(0, lineHeight);
-      this.canvases.background.ctx.lineTo(this.canvases.node.width, lineHeight);
+      this.canvases.background.ctx.lineTo(this.canvases.node.dom.width, lineHeight);
       --hLineTarget;
     }
 
