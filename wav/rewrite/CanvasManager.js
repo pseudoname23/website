@@ -92,14 +92,13 @@ class CanvasManager {
 
   drawGrid() {
     // if this is broken consider the helper functions above
-    this.canvases.background.ctx.strokeStyle = "rgb(0,0,0)";
-    this.canvases.background.ctx.lineWidth = 2;
+    this.canvases.background.ctx.strokeStyle = "rgba(0,0,0,0.5)";
+    this.canvases.background.ctx.lineWidth = 0.5;
     this.canvases.background.ctx.beginPath();
     const lineInterval = this.pixelsPerUnit * 10;
 
     const hStartOffset = Math.sign(this.su.top) === 1 ? Math.ceil(this.su.top/10)*10 - this.su.top : Math.abs(this.su.top % 10);
     let hLineTarget = Math.floor((this.canvases.node.dom.height - hStartOffset * this.pixelsPerUnit) / lineInterval);
-    console.log(hStartOffset * this.pixelsPerUnit + hLineTarget * lineInterval);
     while (hLineTarget > 0) {
       let lineHeight = hStartOffset * this.pixelsPerUnit + hLineTarget * lineInterval;
       this.canvases.background.ctx.moveTo(0, lineHeight);
@@ -107,10 +106,19 @@ class CanvasManager {
       --hLineTarget;
     }
 
+    const vStartOffset = Math.sign(this.su.left) === 1 ? Math.ceil(this.su.left/10)*10 - this.su.left : Math.abs(this.su.left % 10);
+    let vLineTarget = Math.floor((this.canvases.node.dom.width - vStartOffset * this.pixelsPerUnit) / lineInterval);
+    while (vLineTarget > 0) {
+      let linePos = vStartOffset * this.pixelsPerUnit + vLineTarget * lineInterval;
+      this.canvases.background.ctx.moveTo(linePos, 0);
+      this.canvases.background.ctx.lineTo(linePos, this.canvases.node.dom.height);
+      --vLineTarget;
+    }
+
     this.canvases.background.ctx.stroke();
   }
   clearGrid() {
-
+    this.canvases.background.ctx.clearRect(0, 0, this.canvases.node.dom.width, this.canvases.node.dom.height);
   }
 
 
@@ -213,12 +221,14 @@ class CanvasManager {
   clearAll() {
     this.canvases.node.ctx.clearRect(0, 0, this.canvases.node.dom.width, this.canvases.node.dom.height);
     this.canvases.cursor.ctx.clearRect(0, 0, this.canvases.node.dom.width, this.canvases.node.dom.height);
+    this.clearGrid();
   }
 
   drawAll() {
     this.drawCursorTracker();
     this.drawCenterTracker();
     this.drawAllNodes();
+    this.drawGrid();
   }
 
 
