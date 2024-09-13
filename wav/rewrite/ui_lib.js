@@ -13,7 +13,7 @@ Array.prototype.remove = function(entry) {
  * @param  {Object=} args The properties of the element. Keys indicate properties, values indicate values.
  *                        Classes must be provided as an array of strings with the key "classes".
  *                        Event handlers under the key "eventHandler" must also be given an event type under
- *                        ... the key "eventType", or else they will be ignored, and vice versa.
+ *                        the key "eventType", or else they will be ignored, and vice versa.
  * @return {HTMLElement}  An HTMLElement of the given type with the given properties.
  */
 function genericElem(type, args={}) {

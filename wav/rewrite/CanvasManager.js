@@ -146,7 +146,12 @@ class CanvasManager {
   clearNode(id) {
     const node = this.nodes[id];
     if (!node) return;
-    // TODO
+    if (!this.images[node.node.constructor.name]) return;
+    this.canvases.node.ctx.clearRect(
+      node.px.x, node.px.y,
+      100 * this.pixelsPerUnit,
+      100 * this.pixelsPerUnit
+    )
   }
 
   drawAllNodes() {
@@ -161,23 +166,23 @@ class CanvasManager {
 
 
 
-  drawCursorTracker() {
-    this.canvases.cursor.ctx.fillRect(
-      this.px.mouseX, 
-      this.px.mouseY, 
-      10 * this.pixelsPerUnit, 
-      10 * this.pixelsPerUnit
-    );
-  }
+  //drawCursorTracker() {
+  //  this.canvases.cursor.ctx.fillRect(
+  //    this.px.mouseX, 
+  //    this.px.mouseY, 
+  //    10 * this.pixelsPerUnit, 
+  //    10 * this.pixelsPerUnit
+  //  );
+  //}
 
-  clearCursorTracker() {
-    this.canvases.cursor.ctx.clearRect(
-      this.px.mouseX - 1, 
-      this.px.mouseY - 1, 
-      (10 * this.pixelsPerUnit) + 2, 
-      (10 * this.pixelsPerUnit) + 2
-    );
-  }
+  //clearCursorTracker() {
+  //  this.canvases.cursor.ctx.clearRect(
+  //    this.px.mouseX - 1, 
+  //    this.px.mouseY - 1, 
+  //    (10 * this.pixelsPerUnit) + 2, 
+  //    (10 * this.pixelsPerUnit) + 2
+  //  );
+  //}
 
 
 
@@ -224,7 +229,7 @@ class CanvasManager {
   }
 
   drawAll() {
-    this.drawCursorTracker();
+    //this.drawCursorTracker();
     this.drawCenterTracker();
     this.drawAllNodes();
     this.drawGrid();
@@ -282,21 +287,38 @@ class CanvasManager {
   }
 
   onpointermove(e) {
-    this.clearCursorTracker();
+    //this.clearCursorTracker();
 
     this.px.mouseX = e.offsetX;
     this.px.mouseY = e.offsetY;
     this.su.mouseX = this.pixelXToUnitX(e.offsetX);
     this.su.mouseY = this.pixelYToUnitY(e.offsetY);
 
-    this.drawCursorTracker();
+    let overNode = false;
+    for (const node of Object.values(this.nodes)) {
+      if (this.mouseIntersects(node)) {
+        overNode = true;
+        this.canvases.cursor.dom.style.cursor = "grab";
+      }
+    }
+    if (overNode === false) this.canvases.cursor.dom.style.cursor = "";
+
+    //this.drawCursorTracker();
   }
 
-  onpointerup(e){
-
+  mouseIntersects(node) {
+    if (this.px.mouseX < node.px.x) return false;
+    if (this.px.mouseY < node.px.y) return false;
+    if (this.px.mouseX > node.px.x + 100 * this.pixelsPerUnit) return false;
+    if (this.px.mouseY > node.px.y + 100 * this.pixelsPerUnit) return false;
+    return true;
   }
 
   onpointerdown(e){
+
+  }
+
+  onpointerup(e){
 
   }
 
@@ -321,3 +343,4 @@ window.addEventListener("resize", function() {
   if (!ctxStarted) return;
   mgmt.canvas.onresize();
 });
+ 
