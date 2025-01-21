@@ -50,3 +50,19 @@ body {
 #percent {
     padding: 0 0 0 5px;
 }
+
+.atrocity {
+    margin: 1px;
+    padding: 1px;
+}
+
+a {
+    font-weight: lighter;
+}
+
+.timestamp {
+    font-size: 12px;
+    color: gray;
+    font-style: italic;
+    align-self: center;
+}
