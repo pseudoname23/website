@@ -1,1 +1,11 @@
+progress {
+    -webkit-appearance: none;
+}
 
+::-webkit-progress-bar {
+    background-color: white;
+}
+
+::-webkit-progress-value {
+    background-color: linear-gradient(right, red, green);
+}
