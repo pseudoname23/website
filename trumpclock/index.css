@@ -21,7 +21,7 @@ body {
     display: grid;
 }
 
-#title {
+.title {
     font-size: 42px;
     font-weight: bolder;
 }
