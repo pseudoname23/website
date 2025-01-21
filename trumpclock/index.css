@@ -16,18 +16,17 @@ progress {
 
 body {
     font-family: sans-serif;
-    align-items: center;
+    display: grid;
 }
 
 #title {
     font-size: larger;
     font-weight: bolder;
-    max-width: fit-content;
-    justify-self: center;
 }
 
 #clock {
-    display: grid;
+    justify-self: center;
+    max-width: fit-content;
 }
 
 .time {
