@@ -84,4 +84,4 @@ function updateTimeRemaining() {
 }
 
 updateTimeRemaining();
-setInterval(updateTimeRemaining, 1000);
+setInterval(updateTimeRemaining, 250);
