@@ -36,3 +36,12 @@ body {
     margin: 2px;
     padding: 0;
 }
+
+#bar {
+    display: flex;
+    justify-content: start;
+}
+
+#progress {
+    flex-grow: 1;
+}
