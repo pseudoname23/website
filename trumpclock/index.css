@@ -30,6 +30,7 @@ body {
 #clock {
     justify-self: center;
     max-width: fit-content;
+    display: grid;
 }
 
 .time {
