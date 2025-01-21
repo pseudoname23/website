@@ -20,6 +20,11 @@ body {
     font-family: sans-serif;
 }
 
+#container {
+    justify-self: center;
+    max-width: fit-content;
+}
+
 .title {
     justify-self: center;
     font-size: 42px;
