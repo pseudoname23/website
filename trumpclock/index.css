@@ -23,7 +23,8 @@ body {
     font-size: larger;
     font-weight: bolder;
     max-width: fit-content;
-    margin: 0 auto;
+    display: inline-block;
+    text-align: center;
 }
 
 .time {
