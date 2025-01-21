@@ -83,4 +83,5 @@ function updateTimeRemaining() {
     $("progress").value = timeRemaining.percent;
 }
 
-setInterval(updateTimeRemaining, 1000)
+updateTimeRemaining();
+setInterval(updateTimeRemaining, 1000);
