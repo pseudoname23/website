@@ -29,7 +29,8 @@ body {
     justify-self: center;
     font-size: 42px;
     font-weight: bolder;
-    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .section {
@@ -48,6 +49,8 @@ body {
 #bar {
     display: flex;
     justify-content: start;
+    margin-top: 4px;
+    margin-bottom: 8px;
 }
 
 #progress {
