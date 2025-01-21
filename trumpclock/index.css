@@ -23,8 +23,11 @@ body {
     font-size: larger;
     font-weight: bolder;
     max-width: fit-content;
-    display: inline-block;
-    text-align: center;
+    justify-self: center;
+}
+
+#clock {
+    display: grid;
 }
 
 .time {
