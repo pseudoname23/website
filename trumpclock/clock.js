@@ -66,7 +66,7 @@ function setTimeRemaining() {
     timeRemaining.seconds = Math.floor(secondsRemaining);
 
     const termDuration = endDate - inaugurationDate;
-    timeRemaining.percent = msRemaining / termDuration;
+    timeRemaining.percent = 1 - (msRemaining / termDuration);
 }
 
 function updateTimeRemaining() {
