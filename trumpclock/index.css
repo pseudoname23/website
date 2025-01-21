@@ -42,7 +42,8 @@ body {
 .time {
     font-size: 26px;
     font-weight: bold;
-    margin: 2px;
+    margin-top: 0;
+    margin-bottom: 4px;
     padding: 0;
 }
 
