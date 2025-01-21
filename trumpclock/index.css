@@ -22,7 +22,7 @@ body {
 }
 
 #title {
-    font-size: 28px;
+    font-size: 42px;
     font-weight: bolder;
 }
 
@@ -32,7 +32,7 @@ body {
 }
 
 .time {
-    font-size: 18px;
+    font-size: 26px;
     font-weight: bold;
     margin: 2px;
     padding: 0;

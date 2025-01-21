@@ -2,7 +2,7 @@ const $ = id => document.getElementById(id);
 
 const title = $("title");
 title.addEventListener("pointerup", () => {
-    title.innerText = "Shadow President Musk's term ends in"
+    title.innerText = "Shadow President Musk's term ends in:"
 }, {once: true});
 
 const inaugurationDate = new Date("January 20, 2025 11:00:00 GMT-06:00");
