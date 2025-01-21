@@ -26,4 +26,6 @@ body {
 .time {
     font-size: medium;
     font-weight: bold;
+    margin: 0;
+    padding: 0;
 }
