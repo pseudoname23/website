@@ -9,3 +9,21 @@ progress {
 ::-webkit-progress-value {
     background-color: linear-gradient(right, red, green);
 }
+
+::-webkit-progress-inner-element {
+    border: 2px solid black;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+#title {
+    font-size: large;
+    font-weight: bold;
+}
+
+.time {
+    font-size: medium;
+    font-weight: bold;
+}
