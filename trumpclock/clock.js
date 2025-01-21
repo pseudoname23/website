@@ -64,6 +64,9 @@ function setTimeRemaining() {
     timeRemaining.minutes = Math.floor(minutesRemaining);
     let secondsRemaining = (minutesRemaining % 1) * 60;
     timeRemaining.seconds = Math.floor(secondsRemaining);
+
+    const termDuration = endDate - inaugurationDate;
+    timeRemaining.percent = msRemaining / termDuration;
 }
 
 function updateTimeRemaining() {
@@ -75,6 +78,9 @@ function updateTimeRemaining() {
     $("hours").innerText = timeRemaining.hours;
     $("minutes").innerText = timeRemaining.minutes;
     $("seconds").innerText = timeRemaining.seconds;
+    const formattedPercent = Math.floor(timeRemaining.percent * 10000) / 100;
+    $("percent").innerText = `${formattedPercent}%`;
+    $("progress").value = timeRemaining.percent;
 }
 
 setInterval(updateTimeRemaining, 1000)
