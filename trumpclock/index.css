@@ -67,10 +67,6 @@ body {
     padding: 1px;
 }
 
-a {
-    font-weight: lighter;
-}
-
 .timestamp {
     font-size: 12px;
     color: gray;
