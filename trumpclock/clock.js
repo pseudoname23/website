@@ -69,8 +69,9 @@ function setTimeRemaining() {
     timeRemaining.percent = 1 - (msRemaining / termDuration);
 }
 
-function updateTimeRemaining() {
-    setTimeRemaining();
+
+function updateUI() {
+    // update counters
     $("years").innerText = timeRemaining.years;
     $("months").innerText = timeRemaining.months;
     $("weeks").innerText = timeRemaining.weeks;
@@ -78,10 +79,26 @@ function updateTimeRemaining() {
     $("hours").innerText = timeRemaining.hours;
     $("minutes").innerText = timeRemaining.minutes;
     $("seconds").innerText = timeRemaining.seconds;
+
+    // update percent
     const formattedPercent = Math.floor(timeRemaining.percent * 10000) / 100;
     $("percent").innerText = `${formattedPercent}%`;
     $("progress").value = timeRemaining.percent;
+
+    // update plurals
+    $("yearplural").innerText = (timeRemaining.years === 1 ? "" : "s");
+    $("monthplural").innerText = (timeRemaining.months === 1 ? "" : "s");
+    $("weekplural").innerText = (timeRemaining.weeks === 1 ? "" : "s");
+    $("dayplural").innerText = (timeRemaining.days === 1 ? "" : "s");
+    $("hourplural").innerText = (timeRemaining.hours === 1 ? "" : "s");
+    $("minuteplural").innerText = (timeRemaining.minutes === 1 ? "" : "s");
+    $("secondplural").innerText = (timeRemaining.seconds === 1 ? "" : "s");
 }
 
-updateTimeRemaining();
-setInterval(updateTimeRemaining, 250);
+function tick() {
+    setTimeRemaining();
+    updateUI();
+}
+
+tick();
+setInterval(tick, 250);
