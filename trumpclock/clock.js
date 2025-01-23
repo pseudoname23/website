@@ -7,9 +7,6 @@ title.addEventListener("pointerup", () => {
 
 const inaugurationDate = new Date("January 20, 2025 11:00:00 GMT-06:00");
 const endDate = new Date("January 20, 2029 11:00:00 GMT-06:00");
-const daysPerMonth = [
-    31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
-]
 const daysPerMonthReversed = [
     31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 28, 31
 ]
@@ -25,10 +22,12 @@ const timeRemaining = {
 };
 
 function setTimeRemaining() {
-    const now = Date.now(); // ms
-    const msRemaining = endDate - now;
+    const msRemaining = endDate - Date.now();
 
     let daysRemaining = msRemaining/1000/60/60/24;
+
+    // determine years remaining
+    // there'll only be one leap year and it'll be 2028
     let isLeapYear = false;
     if (daysRemaining < 366) {
         timeRemaining.years = 0;
@@ -39,8 +38,10 @@ function setTimeRemaining() {
         yearsRemaining += Math.floor(daysRemaining / 365);
         daysRemaining = daysRemaining % 365;
         timeRemaining.years = yearsRemaining;
-    } // years: check
+    }
 
+    // determine months remaining
+    // there's probably a better way to handle leap month, but this way works
     let monthsRemaining = 0;
     for (const n of daysPerMonthReversed) {
         let leapDay = 0;
@@ -54,7 +55,7 @@ function setTimeRemaining() {
             timeRemaining.months = monthsRemaining;
             break;
         }
-    } // months: check
+    }
 
     timeRemaining.weeks = Math.floor(daysRemaining / 7);
     timeRemaining.days = Math.floor(daysRemaining % 7)
@@ -80,7 +81,7 @@ function updateUI() {
     $("minutes").innerText = timeRemaining.minutes;
     $("seconds").innerText = timeRemaining.seconds;
 
-    // update percent
+    // update progress bar
     const formattedPercent = Math.floor(timeRemaining.percent * 10000) / 100;
     $("percent").innerText = `${formattedPercent}%`;
     $("progress").value = timeRemaining.percent;
@@ -101,4 +102,4 @@ function tick() {
 }
 
 tick();
-setInterval(tick, 250);
+setInterval(tick, 250); // 4x/sec for accuracy
