@@ -1,0 +1,68 @@
+table {
+    border-spacing: 0
+}
+
+td {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+    font-size: 60px;
+    padding: 0;
+    width: 66px;
+    height: 66px;
+    line-height: 0;
+}
+
+.edge_top {
+    border-top: 8px solid black;
+}
+
+.edge_right {
+    border-right: 8px solid black;
+}
+
+.edge_bottom {
+    border-bottom: 8px solid black;
+}
+
+.edge_left {
+    border-left: 8px solid black;
+}
+
+.hash_top {
+    border-top: 2px solid black;
+}
+
+.hash_right {
+    border-right: 2px solid black;
+}
+
+.hash_bottom {
+    border-bottom: 2px solid black;
+}
+
+.hash_left {
+    border-left: 2px solid black;
+}
+
+.sus {
+    font-size: 8px;
+    color: blue;
+}
+
+.rejected {
+    font-size: 8px;
+    color: red;
+}
+
+/*
+#selector {
+  display: flex;
+  flex-direction: row;
+  width: 624px;
+}
+button {
+  flex-grow: 1;
+  height: 30px
+}
+*/
