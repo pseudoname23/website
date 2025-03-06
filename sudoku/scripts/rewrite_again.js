@@ -3,7 +3,6 @@ const grid = document.createElement('table');
 grid.id = 'grid';
 
 function selectCell(cellDOM, add) {
-  console.log(cellDOM)
   if (!add) {
     for (const selectedCell of document.getElementsByClassName("selected")) {
       selectedCell.classList.remove("selected");

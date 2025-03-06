@@ -24,6 +24,10 @@ td:hover {
     background-color: rgba(0, 0, 255, 0.5);
 }
 
+.selected:hover {
+    background-color: rgba(0, 0, 255, 0.6);
+}
+
 #row1>td {
     border-bottom: 3px solid black;
 }
