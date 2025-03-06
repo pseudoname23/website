@@ -15,30 +15,24 @@ td {
     line-height: 0;
 }
 
+#row1>td {
+    border-bottom: 3px solid black;
+}
+
 #row3>td,
-#row6>td {
+#row6>td,
+#row9>td {
     border-top: 3px solid black;
 }
 
+.col1,
 .col4,
 .col7 {
     border-left: 3px solid black;
 }
 
-.edge_top {
-    border-top: 8px solid black;
-}
-
-.edge_right {
-    border-right: 8px solid black;
-}
-
-.edge_bottom {
-    border-bottom: 8px solid black;
-}
-
-.edge_left {
-    border-left: 8px solid black;
+.col9 {
+    border-right: 3px solid black;
 }
 
 .hash_top {
