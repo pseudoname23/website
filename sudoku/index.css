@@ -15,8 +15,8 @@ td {
     line-height: 0;
 }
 
-#row3,
-#row6 {
+#row3>td,
+#row6>td {
     border-top: 3px solid black;
 }
 
