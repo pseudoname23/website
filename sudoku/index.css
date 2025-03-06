@@ -15,6 +15,11 @@ td {
     line-height: 0;
 }
 
+td:hover {
+    color: rgba(0, 0, 255, 0.25);
+    cursor: pointer;
+}
+
 #row1>td {
     border-bottom: 3px solid black;
 }
