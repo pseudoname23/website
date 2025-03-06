@@ -6,8 +6,7 @@ function selectCell(cellDOM, add) {
   if (!add) {
     const arrayCopy = Array.from(document.getElementsByClassName("selected"));
     for (const selectedCell of arrayCopy) {
-      if (selectedCell === cellDOM) continue;
-      selectedCell.classList.remove("selected");
+      if (selectedCell !== cellDOM) selectedCell.classList.remove("selected");
     }
   }
   cellDOM.classList.toggle("selected");
