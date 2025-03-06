@@ -4,7 +4,8 @@ grid.id = 'grid';
 
 function selectCell(cellDOM, add) {
   if (!add) {
-    for (const selectedCell of document.getElementsByClassName("selected")) {
+    const arrayCopy = Array.from(document.getElementsByClassName("selected"));
+    for (const selectedCell of arrayCopy) {
       selectedCell.classList.remove("selected");
     }
   }
