@@ -25,7 +25,7 @@ for (let i = 9; i > 0; --i) {
     cell.classList.add(`col${j}`);
     row.appendChild(cell);
     cell.addEventListener("pointerup", e => {
-      selectCell(this, e.shiftKey);
+      selectCell(cell, e.shiftKey);
     })
   }
   grid.appendChild(row);
