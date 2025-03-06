@@ -15,6 +15,11 @@ td {
     line-height: 0;
 }
 
+#row3,
+#row6 {
+    border-top: 3px solid black;
+}
+
 .edge_top {
     border-top: 8px solid black;
 }

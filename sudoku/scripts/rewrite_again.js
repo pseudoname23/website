@@ -12,6 +12,7 @@ for (let i = 9; i > 0; --i) {
     cell.id = `x${j}y${i}`;
     // X value === Col #
     // Y value === Row #
+    cell.classList.add(`col${j}`);
     row.appendChild(cell);
   }
   grid.appendChild(row);
