@@ -2,6 +2,15 @@ const $ = id => document.getElementById(id);
 const grid = document.createElement('table');
 grid.id = 'grid';
 
+function selectCell(cellDOM, add) {
+  if (!add) {
+    for (const selectedCell of document.getElementsByClassName("selected")) {
+      selectedCell.classList.remove("selected");
+    }
+  }
+  cellDOM.classList.add("selected");
+}
+
 // Row 1 is the bottom, so it will be the last created
 for (let i = 9; i > 0; --i) {
   let row = document.createElement('tr');
@@ -14,6 +23,9 @@ for (let i = 9; i > 0; --i) {
     // Y value === Row #
     cell.classList.add(`col${j}`);
     row.appendChild(cell);
+    cell.addEventListener("pointerup", e => {
+      selectCell(this, e.shiftKey);
+    })
   }
   grid.appendChild(row);
 }
