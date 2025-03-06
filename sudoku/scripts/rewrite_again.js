@@ -9,7 +9,7 @@ function selectCell(cellDOM, add) {
       selectedCell.classList.remove("selected");
     }
   }
-  cellDOM.classList.add("selected");
+  cellDOM.classList.toggle("selected");
 }
 
 // Row 1 is the bottom, so it will be the last created
