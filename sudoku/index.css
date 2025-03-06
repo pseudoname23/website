@@ -20,6 +20,11 @@ td {
     border-top: 3px solid black;
 }
 
+.col4,
+.col7 {
+    border-left: 3px solid black;
+}
+
 .edge_top {
     border-top: 8px solid black;
 }
