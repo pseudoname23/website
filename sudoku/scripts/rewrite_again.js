@@ -2,6 +2,17 @@ const $ = id => document.getElementById(id);
 const grid = document.createElement('table');
 const gridInternal = {};
 const singleDigitNumbers = [1,2,3,4,5,6,7,8,9];
+const validKeyCodes = [
+  "Digit1", 
+  "Digit2", 
+  "Digit3", 
+  "Digit4", 
+  "Digit5", 
+  "Digit6", 
+  "Digit7", 
+  "Digit8", 
+  "Digit9"
+];
 const hashmaker = '_abcdefghj';
 grid.id = 'grid';
 
@@ -26,6 +37,12 @@ function hash(x, y) {
 // Returns a Cell object given a coordinate pair.
 function getCell(x, y) {
   return gridInternal[hash(x, y)];
+}
+
+function getCellFromDOM(td) {
+  const x = parseInt(td.id[1]);
+  const y = parseInt(td.id[3]);
+  return getCell(x, y);
 }
 
 // Returns the <td> associated with the Cell at the given coordinate pair.
@@ -118,6 +135,22 @@ function getRelevantCells(x, y) {
 
   cells.delete(getCell(x, y));
   return Array.from(cells);
+}
+
+function getSelectedCells() {
+  return document.getElementsByClassName("selected");
+}
+
+function setCells(code) {
+  if (!validKeyCodes.includes(code)) return;
+  const selectedCells = getSelectedCells();
+  if (selectedCells.length === 0) return;
+  if (selectedCells.length === 1) {
+    const cell = getCellFromDOM(selectedCells[0]);
+    cell.setTo(parseInt(code[5]));
+  } else {
+    console.log("Multi-set not yet supported");
+  }
 }
 
 // Row 1 is the bottom, so it will be the last created
