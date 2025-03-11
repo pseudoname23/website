@@ -177,6 +177,7 @@ function clearCells(code) {
 
 window.addEventListener("keyup", e => {
   setCells(e.code);
+  clearCells(e.code);
 })
 
 // Row 1 is the bottom, so it will be the last created
