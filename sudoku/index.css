@@ -13,6 +13,7 @@ td {
     width: 66px;
     height: 66px;
     line-height: 0;
+    user-select: none;
 }
 
 td:hover {

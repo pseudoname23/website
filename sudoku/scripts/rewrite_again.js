@@ -181,8 +181,6 @@ window.addEventListener("keyup", e => {
   clearCells(e.code);
 })
 
-window.addEventListener("pointerup", e => e.preventDefault())
-
 // Row 1 is the bottom, so it will be the last created
 for (let i = 9; i > 0; --i) {
   let row = document.createElement('tr');
