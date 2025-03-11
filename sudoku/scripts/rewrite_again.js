@@ -167,7 +167,7 @@ function setCells(code) {
 
 function clearCells(code) {
   if (code !== "Backspace") return;
-  const selectedCells = getSelectedCells();
+  const selectedCells = Array.from(getSelectedCells());
   if (selectedCells.length === 0) return;
   for (const cellDOM of selectedCells) {
     const cell = getCellFromDOM(cellDOM);
