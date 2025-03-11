@@ -135,12 +135,12 @@ for (let i = 9; i > 0; --i) {
   }
   grid.appendChild(row);
 }
+document.body.appendChild(grid);
 for (let i of singleDigitNumbers) {
   for (let j of singleDigitNumbers) {
     new Cell(i, j);
   }
 }
-document.body.appendChild(grid);
 const rows = [], columns = [], blocks = [];
 for (let i of singleDigitNumbers) {
   rows.push(getCellsInRow(i));
