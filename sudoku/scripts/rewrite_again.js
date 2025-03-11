@@ -158,7 +158,7 @@ function setCells(code) {
   if (selectedCells.length === 1) {
     const cell = getCellFromDOM(selectedCells[0]);
     cell.setTo(parseInt(code[5]));
-    deselect(cell);
+    deselect(cell.DOM);
   } else {
     console.log("Multi-set not yet supported");
   }
