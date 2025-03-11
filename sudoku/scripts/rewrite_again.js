@@ -157,10 +157,21 @@ function setCells(code) {
   if (selectedCells.length === 0) return;
   if (selectedCells.length === 1) {
     const cell = getCellFromDOM(selectedCells[0]);
-    cell.setTo(parseInt(code[5]));
+    cell.setTo(parseInt(code[5]), true);
     deselect(cell.DOM);
   } else {
     console.log("Multi-set not yet supported");
+  }
+}
+
+function clearCells(code) {
+  if (code !== "Backspace") return;
+  const selectedCells = getSelectedCells();
+  if (selectedCells.length === 0) return;
+  for (const cellDOM of selectedCells) {
+    const cell = getCellFromDOM(cellDOM);
+    cell.clear(true);
+    deselect(cellDOM);
   }
 }
 
