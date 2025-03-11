@@ -153,6 +153,10 @@ function setCells(code) {
   }
 }
 
+window.addEventListener("keyup", e => {
+  setCells(e.code);
+})
+
 // Row 1 is the bottom, so it will be the last created
 for (let i = 9; i > 0; --i) {
   let row = document.createElement('tr');
