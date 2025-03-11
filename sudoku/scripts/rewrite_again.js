@@ -16,19 +16,6 @@ const validKeyCodes = [
 const hashmaker = '_abcdefghj';
 grid.id = 'grid';
 
-// Selects the cell clicked.
-// If the clicked cell is already selected, deselects it.
-// If there are other selected cells, deselects them unless SHIFT is pressed.
-function selectCell(cellDOM, add) {
-  if (!add) {
-    const arrayCopy = Array.from(document.getElementsByClassName("selected"));
-    for (const selectedCell of arrayCopy) {
-      if (selectedCell !== cellDOM) selectedCell.classList.remove("selected")
-    }
-  }
-  cellDOM.classList.toggle("selected");
-}
-
 // Creates a simple hash for a cell given its coordinates.
 function hash(x, y) {
   return hashmaker[x] + hashmaker[y];
@@ -137,6 +124,29 @@ function getRelevantCells(x, y) {
   return Array.from(cells);
 }
 
+// Selects the cell clicked.
+// If the clicked cell is already selected, deselects it.
+// If there are other selected cells, deselects them unless SHIFT is pressed.
+function selectCell(cellDOM, add) {
+  if (!add) {
+    const arrayCopy = Array.from(getSelectedCells());
+    for (const selectedCell of arrayCopy) {
+      if (selectedCell !== cellDOM) deselect(selectedCell);
+    }
+  }
+  cellDOM.classList.toggle("selected");
+}
+
+function toggleSelected(td) {
+  td.classList.toggle("selected");
+}
+function select(td) {
+  td.classList.add("selected");
+}
+function deselect(td) {
+  td.classList.remove("selected");
+}
+
 function getSelectedCells() {
   return document.getElementsByClassName("selected");
 }
@@ -148,6 +158,7 @@ function setCells(code) {
   if (selectedCells.length === 1) {
     const cell = getCellFromDOM(selectedCells[0]);
     cell.setTo(parseInt(code[5]));
+    deselect(cell);
   } else {
     console.log("Multi-set not yet supported");
   }
