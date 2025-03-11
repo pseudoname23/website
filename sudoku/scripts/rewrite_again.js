@@ -33,26 +33,6 @@ function getCellDOM(x, y) {
   return $(`x${x}y${y}`);
 }
 
-// Row 1 is the bottom, so it will be the last created
-for (let i = 9; i > 0; --i) {
-  let row = document.createElement('tr');
-  row.id = "row"+i;
-  // Column 1 is on the left, so it will be the first created
-  for (let j = 1; j <= 9; ++j) {
-    let cell = document.createElement('td');
-    cell.id = `x${j}y${i}`;
-    // X value === Col #
-    // Y value === Row #
-    cell.classList.add(`col${j}`);
-    row.appendChild(cell);
-    cell.addEventListener("pointerup", e => {
-      selectCell(cell, e.shiftKey);
-    })
-  }
-  grid.appendChild(row);
-}
-document.body.appendChild(grid);
-
 class Cell {
   constructor(x, y) {
     this.x = x;
@@ -66,6 +46,9 @@ class Cell {
       fixed: false
     }
     gridInternal[hash(this.x, this.y)] = this;
+    this.DOM.addEventListener("pointerup", e => {
+      selectCell(e.target, e.shiftKey);
+    })
   }
   get empty() { return !this.fillState.filled; }
   set empty(bool) { this.fillState.filled = !bool; }
@@ -95,12 +78,6 @@ class Cell {
   }
 }
 
-for (let i of singleDigitNumbers) {
-  for (let j of singleDigitNumbers) {
-    new Cell(i, j);
-  }
-}
-
 function getCellsInRow(y) {
   let row = [];
   for (let i of singleDigitNumbers) row.push(getCell(i, y));
@@ -118,6 +95,7 @@ function lowestBlockCoord(num) {
   if (num >= 7) return 7;
   return 4;
 }
+
 function getCellsInBlock(x, y) {
   x = lowestBlockCoord(x);
   y = lowestBlockCoord(y);
@@ -142,6 +120,27 @@ function getRelevantCells(x, y) {
   return Array.from(cells);
 }
 
+// Row 1 is the bottom, so it will be the last created
+for (let i = 9; i > 0; --i) {
+  let row = document.createElement('tr');
+  row.id = "row"+i;
+  // Column 1 is on the left, so it will be the first created
+  for (let j = 1; j <= 9; ++j) {
+    let cell = document.createElement('td');
+    cell.id = `x${j}y${i}`;
+    // X value === Col #
+    // Y value === Row #
+    cell.classList.add(`col${j}`);
+    row.appendChild(cell);
+  }
+  grid.appendChild(row);
+}
+for (let i of singleDigitNumbers) {
+  for (let j of singleDigitNumbers) {
+    new Cell(i, j);
+  }
+}
+document.body.appendChild(grid);
 const rows = [], columns = [], blocks = [];
 for (let i of singleDigitNumbers) {
   rows.push(getCellsInRow(i));
