@@ -51,6 +51,7 @@ class Cell {
     }
     gridInternal[hash(this.x, this.y)] = this;
     this.DOM.addEventListener("pointerup", e => {
+      e.preventDefault();
       selectCell(e.target, e.shiftKey);
     })
   }
