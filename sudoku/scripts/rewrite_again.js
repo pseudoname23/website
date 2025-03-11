@@ -1,7 +1,13 @@
 const $ = id => document.getElementById(id);
 const grid = document.createElement('table');
+const gridInternal = {};
+const singleDigitNumbers = [1,2,3,4,5,6,7,8,9];
+const hashmaker = '_abcdefghj';
 grid.id = 'grid';
 
+// Selects the cell clicked.
+// If the clicked cell is already selected, deselects it.
+// If there are other selected cells, deselects them unless SHIFT is pressed.
 function selectCell(cellDOM, add) {
   if (!add) {
     const arrayCopy = Array.from(document.getElementsByClassName("selected"));
@@ -10,6 +16,21 @@ function selectCell(cellDOM, add) {
     }
   }
   cellDOM.classList.toggle("selected");
+}
+
+// Creates a simple hash for a cell given its coordinates.
+function hash(x, y) {
+  return hashmaker[x] + hashmaker[y];
+}
+
+// Returns a Cell object given a coordinate pair.
+function getCell(x, y) {
+  return gridInternal[hash(x, y)];
+}
+
+// Returns the <td> associated with the Cell at the given coordinate pair.
+function getCellDOM(x, y) {
+  return $(`x${x}y${y}`);
 }
 
 // Row 1 is the bottom, so it will be the last created
@@ -31,21 +52,6 @@ for (let i = 9; i > 0; --i) {
   grid.appendChild(row);
 }
 document.body.appendChild(grid);
-
-function getCellDOM(x, y) {
-  return $(`x${x}y${y}`);
-}
-
-const imLazy = [1,2,3,4,5,6,7,8,9];
-
-const gridInternal = {};
-const hashmaker = '_abcdefghj';
-function hash(x, y) {
-  return hashmaker[x] + hashmaker[y];
-}
-function getCell(x, y) {
-  return gridInternal[hash(x, y)];
-}
 
 class Cell {
   constructor(x, y) {
@@ -80,7 +86,7 @@ class Cell {
     this.setTo(null, manual);
   }
   getPossibleNumbers() {
-    for (let i of imLazy) this.canBe[i] = true;
+    for (let i of singleDigitNumbers) this.canBe[i] = true;
     for (let j of this.relevantCells) {
       if (j.number === null) continue;
       this.canBe[j.number] = false;
@@ -89,21 +95,21 @@ class Cell {
   }
 }
 
-for (let i of imLazy) {
-  for (let j of imLazy) {
+for (let i of singleDigitNumbers) {
+  for (let j of singleDigitNumbers) {
     new Cell(i, j);
   }
 }
 
 function getCellsInRow(y) {
   let row = [];
-  for (let i of imLazy) row.push(getCell(i, y));
+  for (let i of singleDigitNumbers) row.push(getCell(i, y));
   return row;
 }
 
 function getCellsInColumn(x) {
   let col = [];
-  for (let i of imLazy) col.push(getCell(x, i));
+  for (let i of singleDigitNumbers) col.push(getCell(x, i));
   return col;
 }
 
@@ -137,10 +143,10 @@ function getRelevantCells(x, y) {
 }
 
 const rows = [], columns = [], blocks = [];
-for (let i of imLazy) {
+for (let i of singleDigitNumbers) {
   rows.push(getCellsInRow(i));
   columns.push(getCellsInColumn(i));
-  for (let j of imLazy) {
+  for (let j of singleDigitNumbers) {
     getCell(i, j).relevantCells = getRelevantCells(i, j);
   }
 }
