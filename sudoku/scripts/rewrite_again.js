@@ -28,7 +28,7 @@ function hash(x, y) {
 
 // Returns a Cell object given a coordinate pair.
 function getCell(x, y) {
-  return gridInternal[hash(x, y)];
+  return gridInternal.cells[hash(x, y)];
 }
 
 function getCellFromDOM(td) {
