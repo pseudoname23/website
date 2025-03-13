@@ -231,3 +231,6 @@ for (const x of _blockShortcut) {
     new CellGroup('block', getCellsInBlock(x, y))
   }
 }
+for (const cell in gridInternal.cells) {
+  cell.relevantCells = getRelevantCells(cell);
+}
