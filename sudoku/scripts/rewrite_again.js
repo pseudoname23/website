@@ -48,43 +48,22 @@ class Cell {
     this.y = y;
     this.DOM = getCellDOM(x, y);
     this.number = null;
-    this.canBe = [undefined, true, true, true, true, true, true, true, true, true];
-    this.fillState = {
-      filled: false,
-      computed: false,
-      fixed: false
-    }
     gridInternal.cells[hash(this.x, this.y)] = this;
     this.DOM.addEventListener("pointerup", e => {
       e.preventDefault();
       selectCell(e.target, e.shiftKey);
     })
   }
-  get empty() { return !this.fillState.filled; }
-  set empty(bool) { this.fillState.filled = !bool; }
-  get mutable() { return this.empty || this.fillState.computed; }
-  setTo(num, manual = false) {
-    let oldNum = this.number;
+  setTo(num) {
     this.number = num;
     if (num === null) {
-      this.fillState.filled = this.fillState.computed = false;
       this.DOM.innerText = "";
     } else {
-      this.fillState.filled = true;
-      if (!manual) this.fillState.computed = true;
       this.DOM.innerText = num;
     }
   }
-  clear(manual = false) {
-    this.setTo(null, manual);
-  }
-  getPossibleNumbers() {
-    for (let i of singleDigitNumbers) this.canBe[i] = true;
-    for (let j of this.relevantCells) {
-      if (j.number === null) continue;
-      this.canBe[j.number] = false;
-    }
-    return this.canBe;
+  clear() {
+    this.setTo(null);
   }
 }
 
