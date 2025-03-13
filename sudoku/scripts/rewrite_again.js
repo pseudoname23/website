@@ -1,6 +1,11 @@
 const $ = id => document.getElementById(id);
 const grid = document.createElement('table');
-const gridInternal = {};
+const gridInternal = {
+  cells: {},
+  rows: [],
+  columns: [],
+  blocks: {}
+};
 const singleDigitNumbers = [1,2,3,4,5,6,7,8,9];
 const validKeyCodes = [
   "Digit1", 
@@ -49,7 +54,7 @@ class Cell {
       computed: false,
       fixed: false
     }
-    gridInternal[hash(this.x, this.y)] = this;
+    gridInternal.cells[hash(this.x, this.y)] = this;
     this.DOM.addEventListener("pointerup", e => {
       e.preventDefault();
       selectCell(e.target, e.shiftKey);
@@ -80,6 +85,15 @@ class Cell {
       this.canBe[j.number] = false;
     }
     return this.canBe;
+  }
+}
+
+
+class CellGroup {
+  // `type` accepts type 'column', 'row', or 'block'.
+  // `cells` accepts an Array of Cell objects.
+  constructor(type, cells) {
+
   }
 }
 
