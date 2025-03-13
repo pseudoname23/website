@@ -232,5 +232,5 @@ for (const x of _blockShortcut) {
   }
 }
 for (const cell of Object.values(gridInternal.cells)) {
-  cell.relevantCells = getRelevantCells(cell);
+  cell.relevantCells = getRelevantCells(cell.x, cell.y);
 }
