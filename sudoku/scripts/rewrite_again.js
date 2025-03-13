@@ -4,7 +4,7 @@ const gridInternal = {
   cells: {},
   rows: [],
   columns: [],
-  blocks: {}
+  blocks: [] // TODO: make this an object
 };
 const singleDigitNumbers = [1,2,3,4,5,6,7,8,9];
 const validKeyCodes = [
@@ -71,8 +71,32 @@ class Cell {
 class CellGroup {
   // `type` accepts type 'column', 'row', or 'block'.
   // `cells` accepts an Array of Cell objects.
-  constructor(type, cells) {
+  constructor(type, cellArray) {
+    switch(type) {
+      case 'column':
+        gridInternal.columns.push(cellArray);
+        for (const cell of cellArray) {
+          cell.column = cellArray;
+        }
+        break;
 
+      case 'row':
+        gridInternal.rows.push(cellArray);
+        for (const cell of cellArray) {
+          cell.row = cellArray;
+        }
+        break;
+
+      case 'block':
+        gridInternal.blocks.push(cellArray);
+        for (const cell of cellArray) {
+          cell.block = cellArray;
+        }
+        break;
+
+      default:
+        throw Error("Invalid group type passed to CellGroup constructor");
+    }
   }
 }
 
@@ -195,5 +219,15 @@ document.body.appendChild(grid);
 for (let i of singleDigitNumbers) {
   for (let j of singleDigitNumbers) {
     new Cell(i, j);
+  }
+}
+for (const i of singleDigitNumbers) {
+  new CellGroup('row', getCellsInRow(i));
+  new CellGroup('column', getCellsInColumn(i));
+}
+const _blockShortcut = [1, 4, 7];
+for (const x of _blockShortcut) {
+  for (const y of _blockShortcut) {
+    new CellGroup('block', getCellsInBlock(x, y))
   }
 }
