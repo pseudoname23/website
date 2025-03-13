@@ -128,7 +128,7 @@ function selectCell(cellDOM, add) {
       if (selectedCell !== cellDOM) deselect(selectedCell);
     }
   }
-  cellDOM.classList.toggle("selected");
+  toggleSelected(cellDOM);
 }
 
 function toggleSelected(td) {
@@ -163,8 +163,7 @@ function clearCells(code) {
   const selectedCells = Array.from(getSelectedCells());
   if (selectedCells.length === 0) return;
   for (const cellDOM of selectedCells) {
-    const cell = getCellFromDOM(cellDOM);
-    cell.clear(true);
+    getCellFromDOM(cellDOM).clear();
     deselect(cellDOM);
   }
 }
@@ -174,6 +173,7 @@ window.addEventListener("keyup", e => {
   clearCells(e.code);
 })
 
+// Construct cell HTML
 // Row 1 is the bottom, so it will be the last created
 for (let i = 9; i > 0; --i) {
   let row = document.createElement('tr');
@@ -190,16 +190,10 @@ for (let i = 9; i > 0; --i) {
   grid.appendChild(row);
 }
 document.body.appendChild(grid);
+
+// Construct cell data structure
 for (let i of singleDigitNumbers) {
   for (let j of singleDigitNumbers) {
     new Cell(i, j);
-  }
-}
-const rows = [], columns = [], blocks = [];
-for (let i of singleDigitNumbers) {
-  rows.push(getCellsInRow(i));
-  columns.push(getCellsInColumn(i));
-  for (let j of singleDigitNumbers) {
-    getCell(i, j).relevantCells = getRelevantCells(i, j);
   }
 }
