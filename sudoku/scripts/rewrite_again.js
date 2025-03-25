@@ -60,6 +60,7 @@ class Cell {
     for (const cell of this.relevantCells) {
       if (cell.number === null) numbers.add(cell.number);
     }
+    console.log(Array.from(numbers).toString());
     if (numbers.has(num)) return false;
     return true;
   }
