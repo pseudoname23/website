@@ -54,7 +54,17 @@ class Cell {
       selectCell(e.target, e.shiftKey);
     })
   }
+  isValidSudoku(num) {
+    if (num === null) return true;
+    const numbers = new Set();
+    for (const cell of this.relevantCells) {
+      if (cell.number === null) numbers.add(cell.number);
+    }
+    if (numbers.has(num)) return false;
+    return true;
+  }
   setTo(num) {
+    if (!this.isValidSudoku(num)) return;
     this.number = num;
     if (num === null) {
       this.DOM.innerText = "";
