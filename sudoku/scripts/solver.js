@@ -1,5 +1,5 @@
-// AUTO SOLVING 
-function cellSolve() {
+// https://sudoku.com/sudoku-rules
+function obviousSingles() {
   let puzzleChanged = false;
   const emptyCellMap = {};
   Array.from(gridInternal.emptyCells).forEach(cell => {
@@ -30,7 +30,7 @@ function cellSolve() {
   return puzzleChanged;
 }
 
-function genericGroupSolve(group) {
+function genericHiddenSingles(group) {
   if (group.solved) return false;
   const emptyCells = group.getEmptyCells();
   if (emptyCells.length === 0) {
@@ -64,16 +64,16 @@ function genericGroupSolve(group) {
   return subPuzzleChanged;
 }
 
-function groupSolve() {
+function hiddenSingles() {
   let puzzleChanged = false;
   for (const col of gridInternal.columns) {
-    puzzleChanged = puzzleChanged || genericGroupSolve(col);
+    puzzleChanged = puzzleChanged || genericHiddenSingles(col);
   }
   for (const row of gridInternal.rows) {
-    puzzleChanged = puzzleChanged || genericGroupSolve(row);
+    puzzleChanged = puzzleChanged || genericHiddenSingles(row);
   }
   for (const block of gridInternal.blocks) {
-    puzzleChanged = puzzleChanged || genericGroupSolve(block);
+    puzzleChanged = puzzleChanged || genericHiddenSingles(block);
   }
   console.log(`Puzzle changed: ${puzzleChanged.toString()} (group phase)`);
   return puzzleChanged;
@@ -98,10 +98,10 @@ function recursiveSolve() {
     //  console.warn("Reached 1,000 attempts in one solve; cycling once with extra debugging, then aborting");
     //  extraDebugging = true;
     //}
-    lastIterationChanged = cellSolve();
+    lastIterationChanged = obviousSingles();
     ++attempts;
     if (lastIterationChanged) continue;
-    lastIterationChanged = groupSolve();
+    lastIterationChanged = hiddenSingles();
     ++attempts;
   }
 
