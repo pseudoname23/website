@@ -30,39 +30,50 @@ function cellSolve() {
   return puzzleChanged;
 }
 
+function genericGroupSolve(group) {
+  if (group.solved) return false;
+  const emptyCells = group.getEmptyCells();
+  if (emptyCells.length === 0) {
+    group.solved = true;
+    return false;
+  }
+  if (emptyCells.length === 1) return false; // Presumably unsolvable
+  let subPuzzleChanged = false;
+  const possibilitiesMap = {
+    1: [],
+    2: [], // There is probably a better way to do this,
+    3: [], // but this way works for now
+    4: [],
+    5: [],
+    6: [],
+    7: [],
+    8: [],
+    9: []
+  }
+  for (const cell of emptyCells) {
+    const numbers = cell.getPossibleNumbers();
+    for (const n of numbers) possibilitiesMap[n].push(cell);
+  }
+  for (const n in possibilitiesMap) {
+    const arr = possibilitiesMap[n];
+    if (arr.length !== 1) continue;
+    const cell = arr[0];
+    cell.setTo(n);
+    subPuzzleChanged = true;
+  }
+  return subPuzzleChanged;
+}
+
 function groupSolve() {
-  // Only columns for now
   let puzzleChanged = false;
   for (const col of gridInternal.columns) {
-    if (col.solved) continue;
-    const emptyCells = col.getEmptyCells();
-    if (emptyCells.length === 0) {
-      col.solved = true;
-      continue;
-    }
-    if (emptyCells.length === 1) continue; // Presumably unsolvable
-    const possibilitiesMap = {
-      1: [],
-      2: [], // There is probably a better way to do this,
-      3: [], // but this way works for now
-      4: [],
-      5: [],
-      6: [],
-      7: [],
-      8: [],
-      9: []
-    }
-    for (const cell of emptyCells) {
-      const numbers = cell.getPossibleNumbers();
-      for (const n of numbers) possibilitiesMap[n].push(cell);
-    }
-    for (const n in possibilitiesMap) {
-      const arr = possibilitiesMap[n];
-      if (arr.length !== 1) continue;
-      const cell = arr[0];
-      cell.setTo(n);
-      puzzleChanged = true;
-    }
+    puzzleChanged = puzzleChanged || genericGroupSolve(col);
+  }
+  for (const row of gridInternal.rows) {
+    puzzleChanged = puzzleChanged || genericGroupSolve(row);
+  }
+  for (const block of gridInternal.blocks) {
+    puzzleChanged = puzzleChanged || genericGroupSolve(block);
   }
   console.log(`Puzzle changed: ${puzzleChanged.toString()} (group phase)`);
   return puzzleChanged;
