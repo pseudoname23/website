@@ -268,11 +268,16 @@ function attemptSolve() {
   }
   console.log(`Puzzle changed: ${puzzleChanged.toString()}`);
   return puzzleChanged;
-  /*{
-      "ab": [1, 2, 3]
-      "cd": [4, 5]
-      "ef": [6]
-  */
+}
+
+function recursiveSolve() {
+  let lastIterationChanged = true;
+  let attempts = 0;
+  while (lastIterationChanged) {
+    lastIterationChanged = attemptSolve();
+    ++attempts;
+  }
+  return attempts;
 }
 
 window.addEventListener("keyup", e => {
