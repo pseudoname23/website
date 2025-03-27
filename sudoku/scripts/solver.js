@@ -26,7 +26,7 @@ function cellSolve() {
       cell.DOM.classList.add("unsolvable");
     }
   }
-  console.log(`Puzzle changed: ${puzzleChanged.toString()}`);
+  console.log(`Puzzle changed: ${puzzleChanged.toString()} (cell phase)`);
   return puzzleChanged;
 }
 
@@ -64,6 +64,7 @@ function groupSolve() {
       puzzleChanged = true;
     }
   }
+  console.log(`Puzzle changed: ${puzzleChanged.toString()} (group phase)`);
   return puzzleChanged;
   // Get the empty cells in each group and make a data structure like this: {
   // 1: ["aa", "ab", "ac"],
@@ -88,7 +89,6 @@ function recursiveSolve() {
   }
 
   // Phase 2: Look for cell groups where a possible number occurs in only 1 spot
-  lastIterationChanged = true
   setPuzzleState();
   return attempts;
 }
