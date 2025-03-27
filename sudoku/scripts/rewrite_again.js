@@ -220,7 +220,7 @@ function setRandomCell() {
   cell.setTo(randomSudokuInt());
 }
 
-$("setnum").addEventListener(pointerup, setRandomCell);
+$("setnum").addEventListener("pointerup", setRandomCell);
 
 window.addEventListener("keyup", e => {
   setCells(e.code);
