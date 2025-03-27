@@ -81,6 +81,7 @@ class Cell {
   }
   clear() {
     this.setTo(null);
+    this.DOM.classList.remove("permanent");
   }
   getPossibleNumbers() {
     const numbers = new Set();
@@ -199,7 +200,8 @@ function setCells(code) {
   if (selectedCells.length === 0) return;
   if (selectedCells.length === 1) {
     const cell = getCellFromDOM(selectedCells[0]);
-    cell.setTo(parseInt(code[5]), true);
+    cell.setTo(parseInt(code[5]));
+    if (cell.number !== null) cell.DOM.classList.add("permanent");
     deselect(cell.DOM);
   } else {
     console.log("Multi-set not yet supported");
@@ -232,6 +234,7 @@ function setRandomCell() {
   const cell = randomCell();
   if (cell.number !== null) return;
   cell.setTo(randomSudokuInt());
+  if (cell.number !== null) cell.classList.add("permanent");
 }
 
 $("setnum").addEventListener("pointerup", setRandomCell);

@@ -33,6 +33,11 @@ td:hover {
     background-color: rgba(255, 0, 0, 0.6);
 }
 
+.permanent {
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
 #row1>td {
     border-bottom: 3px solid black;
 }
