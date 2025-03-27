@@ -109,3 +109,11 @@ function recursiveSolve() {
   setPuzzleState();
   return attempts;
 }
+
+/* 
+Obvious pairs: If two cells in a group can only be the same two numbers and no other numbers, said numbers can be removed from the possibilities of all other cells in that group.
+          Ex.: Cell 1 can only be 7 or 9, and cell 2 can only be 7 or 9. Cells 3-9 cannot be either 7 or 9.
+
+Hidden pairs: If two cells in a group are the only places two numbers can go, then those cells can't be any other numbers.
+         Ex.: Cells 3-9 cannot be 5 or 7, but cells 1 and 2 COULD be either 5 or 7, among others. Following this technique, cells 1 and 2 cannot be anything except 5 or 7.
+*/
