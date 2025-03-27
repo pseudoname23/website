@@ -29,6 +29,10 @@ td:hover {
     background-color: rgba(0, 0, 255, 0.6);
 }
 
+.unsolvable {
+    background-color: rgba(255, 0, 0, 0.6);
+}
+
 #row1>td {
     border-bottom: 3px solid black;
 }
