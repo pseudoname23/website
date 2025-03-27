@@ -100,7 +100,7 @@ function recursiveSolve() {
 
   // Phase 1: Look for cells with exactly 1 possible number
   while (lastIterationChanged) {
-    if (attempts === 1000) {
+    if (attempts >= 1000) {
       console.warn("Reached 1,000 attempts in one solve; aborting");
       break;
     }
