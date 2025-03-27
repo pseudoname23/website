@@ -202,6 +202,26 @@ function clearCells(code) {
   }
 }
 
+// Returns an integer in the range 1-9 inclusive.
+const randomSudokuInt = () => Math.random()*9+1|0;
+
+// Returns a random Cell object from gridInternal.cells.
+function randomCell() {
+  const x = randomSudokuInt();
+  const y = randomSudokuInt();
+  return gridInternal.cells[hash(x, y)];
+}
+
+// Attempts to find an empty cell and attempts to set it to a random number.
+// If either attempt fails, does nothing.
+function setRandomCell() {
+  const cell = randomCell();
+  if (cell.number !== null) return;
+  cell.setTo(randomSudokuInt());
+}
+
+$("setnum").addEventListener(pointerup, setRandomCell);
+
 window.addEventListener("keyup", e => {
   setCells(e.code);
   clearCells(e.code);
