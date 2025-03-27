@@ -70,20 +70,20 @@ function groupSolve() {
     puzzleChanged = puzzleChanged || genericGroupSolve(col);
   }
   if (puzzleChanged) {
-    console.log(`Puzzle changed: true (group phase)`);
+    console.log(`Puzzle changed: true (group phase: columns)`);
     return true;
   }
   for (const row of gridInternal.rows) {
     puzzleChanged = puzzleChanged || genericGroupSolve(row);
   }
   if (puzzleChanged) {
-    console.log(`Puzzle changed: true (group phase)`);
+    console.log(`Puzzle changed: true (group phase: rows)`);
     return true;
   }
   for (const block of gridInternal.blocks) {
     puzzleChanged = puzzleChanged || genericGroupSolve(block);
   }
-  console.log(`Puzzle changed: ${puzzleChanged.toString()} (group phase)`);
+  console.log(`Puzzle changed: ${puzzleChanged.toString()} (group phase: blocks or complete)`);
   return puzzleChanged;
   // Get the empty cells in each group and make a data structure like this: {
   // 1: ["aa", "ab", "ac"],
