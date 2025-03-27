@@ -270,6 +270,9 @@ function attemptSolve() {
   return puzzleChanged;
 }
 
+// Attempts to solve the puzzle until an attempt changes nothing.
+// Afterward, updates the puzzle state.
+// Returns the number of attempts made.
 function recursiveSolve() {
   let lastIterationChanged = true;
   let attempts = 0;
@@ -278,6 +281,20 @@ function recursiveSolve() {
     ++attempts;
   }
   return attempts;
+}
+
+function updatePuzzleStateIndicator (string) {
+  $("state").innerText = string;
+}
+
+function setPuzzleState() {
+  if (document.getElementsByClassName("unsolvable").length > 0) {
+    updatePuzzleStateIndicator("Unsolvable: One or more cells has no solution")
+  } else if (gridInternal.emptyCells.size > 0) {
+    updatePuzzleStateIndicator("Unsolved: Not enough info or insufficient logic to solve")
+  } else {
+    updatePuzzleStateIndicator("Solved")
+  }
 }
 
 window.addEventListener("keyup", e => {
