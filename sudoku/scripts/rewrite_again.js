@@ -280,6 +280,7 @@ function recursiveSolve() {
     lastIterationChanged = attemptSolve();
     ++attempts;
   }
+  setPuzzleState();
   return attempts;
 }
 
