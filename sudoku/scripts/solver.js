@@ -101,7 +101,7 @@ function recursiveSolve() {
     lastIterationChanged = cellSolve();
     ++attempts;
     if (lastIterationChanged) continue;
-    lastIterationChanged = groupSolve(extraDebugging);
+    lastIterationChanged = groupSolve();
     ++attempts;
   }
 
