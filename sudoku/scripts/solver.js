@@ -30,7 +30,7 @@ function cellSolve() {
   return puzzleChanged;
 }
 
-function genericGroupSolve(group) {
+function genericGroupSolve(group, debug) {
   if (group.solved) return false;
   const emptyCells = group.getEmptyCells();
   if (emptyCells.length === 0) {
@@ -57,6 +57,11 @@ function genericGroupSolve(group) {
   for (const n in possibilitiesMap) {
     const arr = possibilitiesMap[n];
     if (arr.length !== 1) continue;
+    if (debug) {
+      console.log(possibilitiesMap);
+      console.log(n);
+      console.log(group);
+    }
     const cell = arr[0];
     cell.setTo(n);
     subPuzzleChanged = true;
@@ -64,10 +69,10 @@ function genericGroupSolve(group) {
   return subPuzzleChanged;
 }
 
-function groupSolve() {
+function groupSolve(debug) {
   let puzzleChanged = false;
   for (const col of gridInternal.columns) {
-    puzzleChanged = puzzleChanged || genericGroupSolve(col);
+    puzzleChanged = puzzleChanged || genericGroupSolve(col, debug);
   }
   if (puzzleChanged) {
     console.log(`Puzzle changed: true (group phase: columns)`);
@@ -96,18 +101,20 @@ function groupSolve() {
 // Returns the number of attempts made.
 function recursiveSolve() {
   let lastIterationChanged = true;
+  let extraDebugging = false;
   let attempts = 0;
 
   // Phase 1: Look for cells with exactly 1 possible number
   while (lastIterationChanged) {
+    if (extraDebugging === true) break;
     if (attempts >= 1000) {
-      console.warn("Reached 1,000 attempts in one solve; aborting");
-      break;
+      console.warn("Reached 1,000 attempts in one solve; cycling once with extra debugging, then aborting");
+      extraDebugging = true;
     }
     lastIterationChanged = cellSolve();
     ++attempts;
     if (lastIterationChanged) continue;
-    lastIterationChanged = groupSolve();
+    lastIterationChanged = groupSolve(extraDebugging);
     ++attempts;
   }
 
