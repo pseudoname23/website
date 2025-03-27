@@ -87,7 +87,7 @@ class Cell {
     for (const cell of this.relevantCells) {
       if (cell.number !== null) numbers.add(cell.number);
     }
-    return singleDigitNumbers.filter(num => !numbers.contains(num));
+    return singleDigitNumbers.filter(num => !numbers.has(num));
   }
 }
 
