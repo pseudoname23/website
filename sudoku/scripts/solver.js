@@ -63,7 +63,7 @@ function genericGroupSolve(group, debug) {
       console.log(group);
     }
     const cell = arr[0];
-    cell.setTo(n);
+    cell.setTo(parseInt(n));
     subPuzzleChanged = true;
   }
   return subPuzzleChanged;
