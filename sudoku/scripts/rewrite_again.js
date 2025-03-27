@@ -4,7 +4,8 @@ const gridInternal = {
   cells: {},
   rows: [],
   columns: [],
-  blocks: [] // TODO: make this an object
+  blocks: [], // TODO: make this an object
+  emptyCells: new Set()
 };
 const singleDigitNumbers = [1,2,3,4,5,6,7,8,9];
 const validKeyCodes = [
@@ -31,6 +32,7 @@ function getCell(x, y) {
   return gridInternal.cells[hash(x, y)];
 }
 
+// Returns a Cell object given a <td> element. (Reads its ID)
 function getCellFromDOM(td) {
   const x = parseInt(td.id[1]);
   const y = parseInt(td.id[3]);
@@ -54,6 +56,7 @@ class Cell {
       selectCell(e.target, e.shiftKey);
     })
   }
+  // TODO: Make more efficient, you know how, can't articulate it
   isValidSudoku(num) {
     if (num === null) return true;
     const numbers = new Set();
@@ -65,11 +68,14 @@ class Cell {
   }
   setTo(num) {
     if (!this.isValidSudoku(num)) return;
+    const oldNum = this.number;
     this.number = num;
     if (num === null) {
       this.DOM.innerText = "";
+      if (oldNum !== null) gridInternal.emptyCells.add(this);
     } else {
       this.DOM.innerText = num;
+      if (oldNum === null) gridInternal.emptyCells.delete(this);
     }
   }
   clear() {
