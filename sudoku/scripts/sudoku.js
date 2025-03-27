@@ -100,23 +100,25 @@ class CellGroup {
   // `type` accepts type 'column', 'row', or 'block'.
   // `cells` accepts an Array of Cell objects.
   constructor(type, cellArray) {
+    this.cells = cellArray;
+    this.solved = false;
     switch(type) {
       case 'column':
-        gridInternal.columns.push(cellArray);
+        gridInternal.columns.push(this);
         for (const cell of cellArray) {
           cell.column = cellArray;
         }
         break;
 
       case 'row':
-        gridInternal.rows.push(cellArray);
+        gridInternal.rows.push(this);
         for (const cell of cellArray) {
           cell.row = cellArray;
         }
         break;
 
       case 'block':
-        gridInternal.blocks.push(cellArray);
+        gridInternal.blocks.push(this);
         for (const cell of cellArray) {
           cell.block = cellArray;
         }
@@ -125,6 +127,9 @@ class CellGroup {
       default:
         throw Error("Invalid group type passed to CellGroup constructor");
     }
+  }
+  getEmptyCells() {
+    return this.cells.filter(c => c.number === null);
   }
 }
 
