@@ -82,6 +82,13 @@ class Cell {
   clear() {
     this.setTo(null);
   }
+  getPossibleNumbers() {
+    const numbers = new Set();
+    for (const cell of this.relevantCells) {
+      if (cell.number !== null) numbers.add(cell.number);
+    }
+    return singleDigitNumbers.filter(num => !numbers.contains(num));
+  }
 }
 
 
