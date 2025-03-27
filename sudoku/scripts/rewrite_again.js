@@ -225,6 +225,7 @@ const randomSudokuInt = () => Math.random()*9+1|0;
 
 // Returns a random empty cell.
 function randomEmptyCell() {
+  if (gridInternal.emptyCells.size === 0) return null;
   const emptyCells = Array.from(gridInternal.emptyCells);
   return emptyCells[Math.random()*emptyCells.length|0];
 }
@@ -232,14 +233,23 @@ function randomEmptyCell() {
 // Takes a random empty cell and sets it to one of its possible numbers at random.
 function setRandomCell() {
   const cell = randomEmptyCell();
+  if (cell === null) {
+    console.log("Cannot add random number: All cells are full");
+    return false;
+  }
   const candidates = cell.getPossibleNumbers();
+  if (candidates.length === 0) {
+    console.warn("Failed to add random number: Selected unsolvable cell");
+    return false;
+  }
   cell.setTo(candidates[Math.random()*candidates.length|0]);
   cell.DOM.classList.add("permanent");
+  return true;
 }
 
 $("setnum").addEventListener("pointerup", () => {
-  setRandomCell();
-  recursiveSolve();
+  const success = setRandomCell();
+  if (success) recursiveSolve();
 });
 
 // AUTO SOLVING 
