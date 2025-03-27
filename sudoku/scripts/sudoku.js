@@ -22,6 +22,9 @@ const validKeyCodes = [
 const hashmaker = '_abcdefghj';
 grid.id = 'grid';
 
+// Returns an integer in the range 1-9 inclusive.
+const randomSudokuInt = () => Math.random()*9+1|0;
+
 // Creates a simple hash for a cell given its coordinates.
 function hash(x, y) {
   return hashmaker[x] + hashmaker[y];
@@ -167,155 +170,12 @@ function getRelevantCells(x, y) {
   return Array.from(cells);
 }
 
-// Selects the cell clicked.
-// If the clicked cell is already selected, deselects it.
-// If there are other selected cells, deselects them unless SHIFT is pressed.
-function selectCell(cellDOM, add) {
-  if (!add) {
-    const arrayCopy = Array.from(getSelectedCells());
-    for (const selectedCell of arrayCopy) {
-      if (selectedCell !== cellDOM) deselect(selectedCell);
-    }
-  }
-  toggleSelected(cellDOM);
-}
-
-function toggleSelected(td) {
-  td.classList.toggle("selected");
-}
-function select(td) {
-  td.classList.add("selected");
-}
-function deselect(td) {
-  td.classList.remove("selected");
-}
-
-function getSelectedCells() {
-  return document.getElementsByClassName("selected");
-}
-
-function setCells(code) {
-  if (!validKeyCodes.includes(code)) return;
-  const selectedCells = getSelectedCells();
-  if (selectedCells.length === 0) return;
-  if (selectedCells.length === 1) {
-    const cell = getCellFromDOM(selectedCells[0]);
-    cell.setTo(parseInt(code[5]));
-    if (cell.number !== null) cell.DOM.classList.add("permanent");
-    deselect(cell.DOM);
-  } else {
-    console.log("Multi-set not yet supported");
-  }
-  recursiveSolve();
-}
-
-function clearCells(code) {
-  if (code !== "Backspace") return;
-  const selectedCells = Array.from(getSelectedCells());
-  if (selectedCells.length === 0) return;
-  for (const cellDOM of selectedCells) {
-    getCellFromDOM(cellDOM).clear();
-    deselect(cellDOM);
-  }
-  recursiveSolve();
-}
-
-// Returns an integer in the range 1-9 inclusive.
-const randomSudokuInt = () => Math.random()*9+1|0;
-
 // Returns a random empty cell.
 function randomEmptyCell() {
   if (gridInternal.emptyCells.size === 0) return null;
   const emptyCells = Array.from(gridInternal.emptyCells);
   return emptyCells[Math.random()*emptyCells.length|0];
 }
-
-// Takes a random empty cell and sets it to one of its possible numbers at random.
-function setRandomCell() {
-  const cell = randomEmptyCell();
-  if (cell === null) {
-    console.log("Cannot add random number: All cells are full");
-    return false;
-  }
-  const candidates = cell.getPossibleNumbers();
-  if (candidates.length === 0) {
-    console.warn("Failed to add random number: Selected unsolvable cell");
-    return false;
-  }
-  cell.setTo(candidates[Math.random()*candidates.length|0]);
-  cell.DOM.classList.add("permanent");
-  return true;
-}
-
-$("setnum").addEventListener("pointerup", () => {
-  const success = setRandomCell();
-  if (success) recursiveSolve();
-});
-
-// AUTO SOLVING 
-function attemptSolve() {
-  let puzzleChanged = false;
-  const emptyCellMap = {};
-  Array.from(gridInternal.emptyCells).forEach(cell => {
-    emptyCellMap[hash(cell.x, cell.y)] = cell.getPossibleNumbers();
-    cell.DOM.classList.remove("unsolvable");
-  })
-  for (const hash in emptyCellMap) {
-    const possibleNumbers = emptyCellMap[hash];
-    const cell = gridInternal.cells[hash];
-    if (possibleNumbers.length > 1) continue;
-    if (possibleNumbers.length === 1) {
-      cell.setTo(possibleNumbers[0]);
-      if (cell.number === null) {
-        // If cell is still null, that means its only possible number is no longer possible, leaving the puzzle unsolvable
-        console.warn(`Sudoku is unsolvable: Cell ${hash} has no possible numbers. `, cell)
-        cell.DOM.classList.add("unsolvable");
-      } else {
-        puzzleChanged = true;
-      }
-    }
-    if (possibleNumbers.length === 0) {
-      // If the cell has no possible numbers, the puzzle is unsolvable
-      console.warn(`Sudoku is unsolvable: Cell ${hash} has no possible numbers. `, cell)
-      cell.DOM.classList.add("unsolvable");
-    }
-  }
-  console.log(`Puzzle changed: ${puzzleChanged.toString()}`);
-  return puzzleChanged;
-}
-
-// Attempts to solve the puzzle until an attempt changes nothing.
-// Afterward, updates the puzzle state.
-// Returns the number of attempts made.
-function recursiveSolve() {
-  let lastIterationChanged = true;
-  let attempts = 0;
-  while (lastIterationChanged) {
-    lastIterationChanged = attemptSolve();
-    ++attempts;
-  }
-  setPuzzleState();
-  return attempts;
-}
-
-function updatePuzzleStateIndicator (string) {
-  $("state").innerText = string;
-}
-
-function setPuzzleState() {
-  if (document.getElementsByClassName("unsolvable").length > 0) {
-    updatePuzzleStateIndicator("Unsolvable: One or more cells has no solution")
-  } else if (gridInternal.emptyCells.size > 0) {
-    updatePuzzleStateIndicator("Unsolved: Not enough info or insufficient logic to solve")
-  } else {
-    updatePuzzleStateIndicator("Solved")
-  }
-}
-
-window.addEventListener("keyup", e => {
-  setCells(e.code);
-  clearCells(e.code);
-})
 
 // Construct cell HTML
 // Row 1 is the bottom, so it will be the last created
