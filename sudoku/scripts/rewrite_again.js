@@ -206,6 +206,7 @@ function setCells(code) {
   } else {
     console.log("Multi-set not yet supported");
   }
+  recursiveSolve();
 }
 
 function clearCells(code) {
@@ -216,28 +217,30 @@ function clearCells(code) {
     getCellFromDOM(cellDOM).clear();
     deselect(cellDOM);
   }
+  recursiveSolve();
 }
 
 // Returns an integer in the range 1-9 inclusive.
 const randomSudokuInt = () => Math.random()*9+1|0;
 
-// Returns a random Cell object from gridInternal.cells.
-function randomCell() {
-  const x = randomSudokuInt();
-  const y = randomSudokuInt();
-  return gridInternal.cells[hash(x, y)];
+// Returns a random empty cell.
+function randomEmptyCell() {
+  const emptyCells = Array.from(gridInternal.emptyCells);
+  return emptyCells[Math.random()*emptyCells.length|0];
 }
 
-// Attempts to find an empty cell and attempts to set it to a random number.
-// If either attempt fails, does nothing.
+// Takes a random empty cell and sets it to one of its possible numbers at random.
 function setRandomCell() {
-  const cell = randomCell();
-  if (cell.number !== null) return;
-  cell.setTo(randomSudokuInt());
-  if (cell.number !== null) cell.DOM.classList.add("permanent");
+  const cell = randomEmptyCell();
+  const candidates = cell.getPossibleNumbers();
+  cell.setTo(candidates[Math.random()*candidates.length|0]);
+  cell.DOM.classList.add("permanent");
 }
 
-$("setnum").addEventListener("pointerup", setRandomCell);
+$("setnum").addEventListener("pointerup", () => {
+  setRandomCell();
+  recursiveSolve();
+});
 
 // AUTO SOLVING 
 function attemptSolve() {
@@ -245,6 +248,7 @@ function attemptSolve() {
   const emptyCellMap = {};
   Array.from(gridInternal.emptyCells).forEach(cell => {
     emptyCellMap[hash(cell.x, cell.y)] = cell.getPossibleNumbers();
+    cell.DOM.classList.remove("unsolvable");
   })
   for (const hash in emptyCellMap) {
     const possibleNumbers = emptyCellMap[hash];
