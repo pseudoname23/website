@@ -69,8 +69,16 @@ function groupSolve() {
   for (const col of gridInternal.columns) {
     puzzleChanged = puzzleChanged || genericGroupSolve(col);
   }
+  if (puzzleChanged) {
+    console.log(`Puzzle changed: true (group phase)`);
+    return true;
+  }
   for (const row of gridInternal.rows) {
     puzzleChanged = puzzleChanged || genericGroupSolve(row);
+  }
+  if (puzzleChanged) {
+    console.log(`Puzzle changed: true (group phase)`);
+    return true;
   }
   for (const block of gridInternal.blocks) {
     puzzleChanged = puzzleChanged || genericGroupSolve(block);
