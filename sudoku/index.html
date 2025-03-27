@@ -10,8 +10,16 @@
 </head>
 
 <body>
+  <p>
+    How to use: <br>
+    - Click a cell to select it <br>
+    - Press a number key to enter a number into the selected cell <br>
+    - Press Backspace to delete a number from a cell <br>
+    - Every time you enter a number, the puzzle will try to solve itself <br>
+    <i>Note that this means sometimes deleting numbers will not work!</i>
+  </p>
   <button id="setnum">Add Random Number</button>
-  <p>Puzzle state: <span id="state">Unsolved (not enough info)</span></p>
+  <p>Puzzle state: <span id="state">Unsolved: Not enough info or insufficient logic to solve</span></p>
 </body>
 <script src="./scripts/sudoku.js" defer></script>
 <script src="./scripts/ui.js" defer></script>
