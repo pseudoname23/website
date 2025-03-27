@@ -234,7 +234,7 @@ function setRandomCell() {
   const cell = randomCell();
   if (cell.number !== null) return;
   cell.setTo(randomSudokuInt());
-  if (cell.number !== null) cell.classList.add("permanent");
+  if (cell.number !== null) cell.DOM.classList.add("permanent");
 }
 
 $("setnum").addEventListener("pointerup", setRandomCell);
