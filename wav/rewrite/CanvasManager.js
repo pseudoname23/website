@@ -5,6 +5,12 @@ class CanvasManager {
     this.newCanvas("node");
     this.newCanvas("cursor");
     this.nodes = {};
+    this.selectedNodes = {};
+    this.mouseState = {
+      down: false,
+      hovering: null,
+      dragging: null
+    }
 
     // Collection of coordinates measured in pixels
     this.px = {
@@ -126,7 +132,32 @@ class CanvasManager {
     this.nodes[id] = {
       node: mgmt.node.registry[id],
       su: { x: 0, y: 0 },
-      px: { x: 0, y: 0 }
+      px: { x: 0, y: 0 },
+      selected: false
+    }
+  }
+
+  selectNode(id) {
+    if (this.selectedNodes[id]) return;
+    if (!this.nodes[id]) {
+      throw Error(`Tried to select a node with ID ${id} that, according to CanvasManager, does not exist`);
+    }
+    const node = this.nodes[id];
+    node.selected = true;
+    this.selectedNodes[id] = node;
+  }
+
+  deselectNode(id) {
+    if (!this.nodes[id]) {
+      throw Error(`Tried to deselect a node with ID ${id} that, according to CanvasManager, does not exist`);
+    }
+    delete this.selectedNodes[id];
+    this.nodes[id].selected = false;
+  }
+
+  deselectAllNodes() {
+    for (const id in this.selectedNodes) {
+      this.deselectNode(id);
     }
   }
 
@@ -148,9 +179,9 @@ class CanvasManager {
     if (!node) return;
     if (!this.images[node.node.constructor.name]) return;
     this.canvases.node.ctx.clearRect(
-      node.px.x, node.px.y,
-      100 * this.pixelsPerUnit,
-      100 * this.pixelsPerUnit
+      node.px.x-1, node.px.y-1,
+      (100 * this.pixelsPerUnit) + 2,
+      (100 * this.pixelsPerUnit) + 2
     )
   }
 
@@ -286,22 +317,54 @@ class CanvasManager {
     this.drawAll();
   }
 
+  setCursorStyle(style) {
+    this.canvases.cursor.dom.style.cursor = style;
+  }
+
   onpointermove(e) {
     //this.clearCursorTracker();
+    const pxDX = this.px.mouseX - e.offsetX;
+    const pxDY = this.px.mouseY - e.offsetY;
 
     this.px.mouseX = e.offsetX;
     this.px.mouseY = e.offsetY;
     this.su.mouseX = this.pixelXToUnitX(e.offsetX);
     this.su.mouseY = this.pixelYToUnitY(e.offsetY);
 
-    let overNode = false;
+    // If the mouse went down and a drag isn't started, try to start a drag
+    // Drag start may fail if no nodes are selected
+    if (this.mouseState.down && this.mouseState.hovering) {
+      this.mouseState.hovering = null;
+      this.mouseState.dragging = this.selectedNodes;
+      this.setCursorStyle("grabbing");
+    }
+
+    // Continue an ongoing drag (overrides hover checking)
+    if (this.mouseState.dragging) {
+      this.clearAllNodes();
+      for (const node of Object.values(this.selectedNodes)) {
+        node.px.x -= pxDX;
+        node.px.y -= pxDY;
+        node.su.x = this.pixelXToUnitX(node.px.x);
+        node.su.y = this.pixelYToUnitY(node.px.y);
+      }
+      this.drawAllNodes();
+      return;
+    }
+
+    // Check for a hovered node
+    this.mouseState.hovering = null;
     for (const node of Object.values(this.nodes)) {
       if (this.mouseIntersects(node)) {
-        overNode = true;
-        this.canvases.cursor.dom.style.cursor = "grab";
+        this.mouseState.hovering = node;
+        break;
       }
     }
-    if (overNode === false) this.canvases.cursor.dom.style.cursor = "";
+    if (this.mouseState.hovering) {
+      this.setCursorStyle("grab");
+    } else {
+      this.setCursorStyle("");
+    }
 
     //this.drawCursorTracker();
   }
@@ -315,11 +378,23 @@ class CanvasManager {
   }
 
   onpointerdown(e){
-
+    this.mouseState.down = true;
+    // Check what node the cursor is over, if any
+    // Select the node if it exists and prepare it to be dragged
+    if (this.mouseState.hovering) {
+      const hoveredNode = this.mouseState.hovering;
+      if (!hoveredNode.selected && !e.shiftKey) {
+        this.deselectAllNodes();
+      }
+      this.selectNode(hoveredNode.node.id);
+    } else {
+      this.deselectAllNodes();
+    }
   }
 
   onpointerup(e){
-
+    this.mouseState.down = false;
+    this.mouseState.dragging = null;
   }
 
   onwheel(e) {

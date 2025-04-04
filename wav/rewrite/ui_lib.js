@@ -110,8 +110,11 @@ function startAudioCtx() {
 $('ctx').addEventListener("pointerup", startAudioCtx);
 
 function createNewNode() {
-  if (kNodeTypes.indexOf(this.value) == -1) throw new Error();
-  const node = new (window[this.value])(ctx);
+  // `this` is the <select> element in the nodes tab with no ID
+  if (!kNodeTypes.includes(this.value)) {
+    throw Error("Invalid node type passed to createNewNode");
+  }
+  const node = new (window[this.value])(ctx); // what the fuck
   mgmt.node.register(node);
   createNodeMgmtUI(node.id);
   createConnectionMgmtUI(node.id);
