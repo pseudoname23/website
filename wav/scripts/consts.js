@@ -73,9 +73,6 @@ const lastCharOf = str => str.substring(str.length-1);
 const normalize = (x, min, max) => ((x-min) / max-min) * 2 - 1;
 let ctx;
 let ctxStarted = false;
-window.onerror = function(a,b,c,d,e) {
-  //alert(e ? e.stack : a);
-}
 
 // window.addEventListener("wheel", console.log);
 

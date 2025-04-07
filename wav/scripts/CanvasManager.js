@@ -1,6 +1,7 @@
 class CanvasManager {
   constructor() {
     this.canvases = {};
+    this.canvasContainer = $("container");
     this.newCanvas("grid");
     this.newCanvas("node");
     this.newCanvas("cursor");
@@ -45,9 +46,9 @@ class CanvasManager {
     
 
     // resize canvas to fit screen when first visible
-    tabinator.leaves[4].addEventListener("pointerup", () => {
-      mgmt.canvas.onresize();
-    }, {once: true})
+    //tabinator.leaves[4].addEventListener("pointerup", () => {
+    //  mgmt.canvas.onresize();
+    //}, {once: true})
 
     this.canvases.cursor.dom.addEventListener("pointermove", e => {
       this.onpointermove(e);
@@ -71,9 +72,9 @@ class CanvasManager {
 
   newCanvas(name) {
     this.canvases[name] = {};
-    this.canvases[name].dom = genericElem("canvas");
+    this.canvases[name].dom = document.createElement("canvas");
     this.canvases[name].ctx = this.canvases[name].dom.getContext("2d");
-    tabinator.tabs[4].appendChild(this.canvases[name].dom);
+    this.canvasContainer.appendChild(this.canvases[name].dom);
   }
 
 
@@ -129,12 +130,14 @@ class CanvasManager {
 
 
   addNode(id) {
+    this.clearAll();
     this.nodes[id] = {
       node: mgmt.node.registry[id],
-      su: { x: 0, y: 0 },
+      su: { x: this.pixelXToUnitX(0), y: this.pixelYToUnitY(0) },
       px: { x: 0, y: 0 },
       selected: false
     }
+    this.drawAll();
   }
 
   selectNode(id) {
@@ -220,13 +223,13 @@ class CanvasManager {
 
 
   drawCenterTracker() {
-    this.canvases.node.ctx.fillRect(
+    this.canvases.grid.ctx.fillRect(
       this.unitXToPixelX(-2), 
       this.unitYToPixelY(-10), 
       this.pixelsPerUnit * 4,
       this.pixelsPerUnit * 20
     );
-    this.canvases.node.ctx.fillRect(
+    this.canvases.grid.ctx.fillRect(
       this.unitXToPixelX(-10), 
       this.unitYToPixelY(-2), 
       this.pixelsPerUnit * 20,
@@ -235,13 +238,13 @@ class CanvasManager {
   }
 
   clearCenterTracker() {
-    this.canvases.node.ctx.clearRect(
+    this.canvases.grid.ctx.clearRect(
       this.unitXToPixelX(-2) - 1,
       this.unitYToPixelY(-10) - 1, 
       this.pixelsPerUnit * 4 + 2,
       this.pixelsPerUnit * 20 + 2
     );
-    this.canvases.node.ctx.clearRect(
+    this.canvases.grid.ctx.clearRect(
       this.unitXToPixelX(-10) - 1,
       this.unitYToPixelY(-2) - 1,
       this.pixelsPerUnit * 20 + 2,
@@ -308,12 +311,12 @@ class CanvasManager {
   onresize() {
     this.clearAll();
     const parentRect = this.canvases.node.dom.parentElement.getBoundingClientRect();
-    this.canvases.node.dom.height = parentRect.height + 10;
-    this.canvases.node.dom.width = parentRect.width + 10;
-    this.canvases.cursor.dom.height = parentRect.height + 10;
-    this.canvases.cursor.dom.width = parentRect.width + 10;
-    this.canvases.grid.dom.height = parentRect.height + 10;
-    this.canvases.grid.dom.width = parentRect.width + 10;
+    this.canvases.node.dom.height = parentRect.height;
+    this.canvases.node.dom.width = parentRect.width;
+    this.canvases.cursor.dom.height = parentRect.height;
+    this.canvases.cursor.dom.width = parentRect.width;
+    this.canvases.grid.dom.height = parentRect.height;
+    this.canvases.grid.dom.width = parentRect.width;
     this.drawAll();
   }
 

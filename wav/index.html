@@ -1,23 +1,39 @@
 <html>
 
-  <head>
-    <title>i love programming</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="rewrite.css">
-    <link rel="stylesheet" href="tabinator.css">
-    <script src="rewrite/consts.js" defer></script>
-    <script src="rewrite/NodeManager.js" defer></script>
-    <script src="rewrite/ConnectionManager.js" defer></script>
-    <script src="rewrite/AutomationEvent.js" defer></script>
-    <script src="rewrite/AutomationManager.js" defer></script>
-    <script src="rewrite/PlaybackManager.js" defer></script>
-    <script src="rewrite/CanvasManager.js" defer></script>
-    <script src="rewrite/tabinator.js" defer></script>
-    <script src="rewrite/ui_lib.js" defer></script>
-  </head>
+<head>
+  <title>i love programming</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="scripts/consts.js" defer></script>
+  <script src="scripts/NodeManager.js" defer></script>
+  <script src="scripts/ConnectionManager.js" defer></script>
+  <script src="scripts/AutomationEvent.js" defer></script>
+  <script src="scripts/AutomationManager.js" defer></script>
+  <script src="scripts/PlaybackManager.js" defer></script>
+  <script src="scripts/CanvasManager.js" defer></script>
+  <script src="scripts/ui_lib.js" defer></script>
+</head>
 
-  <body>
-    <button id="ctx" type="button">Start Audio Context</button>
-  </body>
+<body>
+  <button id="ctx" type="button">Start Audio Context</button>
+  <select id="node" class="hidden">
+    <option>New Node...</option>
+    <option>AnalyserNode</option>
+    <option>AudioBufferSourceNode</option>
+    <option>BiquadFilterNode</option>
+    <option>ChannelMergerNode</option>
+    <option>ChannelSplitterNode</option>
+    <option>ConstantSourceNode</option>
+    <option>ConvolverNode</option>
+    <option>DelayNode</option>
+    <option>DynamicsCompressorNode</option>
+    <option>GainNode</option>
+    <option>OscillatorNode</option>
+    <option>PannerNode</option>
+    <option>StereoPannerNode</option>
+    <option>WaveShaperNode</option>
+  </select>
+  <div id="container"></div>
+</body>
 
 </html>
