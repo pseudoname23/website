@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>AudioNode Visualizer</title>
+    <meta name="title" content="AudioNode Visualizer" />
+    <meta name="description" content="under construction" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+</head>
+
+<body>
+    <div id="start">
+        <div id="start-prompt">
+            Start AudioContext
+        </div>
+    </div>
+    <div id="app">
+        <div id="node-select">
+            <button class="nodelist-option" id="analyzer" style="color: #FF0000">Analyzer Node</button>
+            <button class="nodelist-option" id="eq" style="color: #FF9200">Biquad Filter Node</button>
+            <button class="nodelist-option" id="source-k" style="color: #FFD300">Constant Source Node</button>
+            <button class="nodelist-option" id="delay" style="color: #66A302">Delay Node</button>
+            <button class="nodelist-option" id="compressor" style="color: #00FD00">Dynamics Compressor Node</button>
+            <button class="nodelist-option" id="gain" style="color: #0288FB">Gain Node</button>
+            <button class="nodelist-option" id="oscillator" style="color: #3E03FB">Oscillator Node</button>
+            <button class="nodelist-option" id="pan" style="color: #FB00FB">Stereo Panner Node</button>
+            <div id="info">
+                <p id="testing">This is a test</p>
+            </div>
+        </div>
+        <div id="nodemap-view">
+            <canvas id="grid" height="3200" width="3200">Upgrade your browser.</canvas>
+            <canvas id="nodes" height="3200" width="3200"></canvas>
+            <canvas id="connections" height="3200" width="3200"></canvas>
+            <canvas id="UI" height="3200" width="3200"></canvas>
+        </div>
+    </div>
+</body>
+<script src="./scripts/misc.js"></script>
+<script src="./scripts/nodes.js"></script>
+<script src="./scripts/canvas.js"></script>
+<script src="./scripts/events.js"></script>
+
+</html>
