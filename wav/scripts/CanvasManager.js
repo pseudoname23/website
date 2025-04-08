@@ -8,9 +8,11 @@ class CanvasManager {
     this.nodes = {};
     this.selectedNodes = {};
     this.mouseState = {
-      down: false,
+      left: false,
+      right: false,
+      panning: false,
       hovering: null,
-      dragging: null
+      dragging: null,
     }
 
     // Collection of coordinates measured in pixels
@@ -334,9 +336,9 @@ class CanvasManager {
     this.su.mouseX = this.pixelXToUnitX(e.offsetX);
     this.su.mouseY = this.pixelYToUnitY(e.offsetY);
 
-    // If the mouse went down and a drag isn't started, try to start a drag
+    // If the left mouse went down and a drag isn't started, try to start a drag
     // Drag start may fail if no nodes are selected
-    if (this.mouseState.down && this.mouseState.hovering) {
+    if (this.mouseState.left && this.mouseState.hovering) {
       this.mouseState.hovering = null;
       this.mouseState.dragging = this.selectedNodes;
       this.setCursorStyle("grabbing");
@@ -369,6 +371,24 @@ class CanvasManager {
       this.setCursorStyle("");
     }
 
+    // If the right mouse went down and there's no hovered node, start a pan
+    if (this.mouseState.right && !this.mouseState.hovering) {
+      this.mouseState.panning = true;
+    }
+
+    // Continue an ongoing pan
+    if (this.mouseState.panning) {
+      this.clearAll();
+      this.su.left += pxDX * this.pixelsPerUnit;
+      this.su.top += pxDY * this.pixelsPerUnit;
+      for (const id in this.nodes) {
+        const node = this.nodes[id]
+        node.px.x = this.unitXToPixelX(node.su.x);
+        node.px.y = this.unitYToPixelY(node.su.y);
+      }
+      this.drawAll();
+    }
+
     //this.drawCursorTracker();
   }
 
@@ -381,7 +401,11 @@ class CanvasManager {
   }
 
   onpointerdown(e){
-    this.mouseState.down = true;
+    if (e.button === 0) {
+      this.mouseState.left = true;
+    } else if (e.button === 2) {
+      this.mouseState.right = true;
+    }
     // Check what node the cursor is over, if any
     // Select the node if it exists and prepare it to be dragged
     if (this.mouseState.hovering) {
@@ -396,7 +420,9 @@ class CanvasManager {
   }
 
   onpointerup(e){
-    this.mouseState.down = false;
+    this.mouseState.left = false;
+    this.mouseState.right = false;
+    this.mouseState.panning = false;
     this.mouseState.dragging = null;
   }
 

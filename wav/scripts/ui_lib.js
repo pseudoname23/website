@@ -1,12 +1,3 @@
-const kIgnoredArgumentProps = ["classes", "eventHandler", "eventType"];
-
-Array.prototype.remove = function(entry) {
-  const idx = this.indexOf(entry);
-  if (idx === -1) return;
-  this.splice(idx, 1);
-  return this;
-} // TODO: Remove
-
 function startAudioCtx() {
               ctx = new AudioContext();
         mgmt.node = new NodeManager(ctx);
@@ -44,10 +35,6 @@ function isLimitedNode(node) {
       || node.constructor == DynamicsCompressorNode 
       || node.constructor == PannerNode
       || node.constructor == StereoPannerNode;
-}
-
-function createAutomationMgmtUI(pID) {
-  //alert("automationmgmt: "+pID);
 }
 
 // splitter + merger nodes cannot change channel count

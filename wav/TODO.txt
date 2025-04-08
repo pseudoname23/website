@@ -1,7 +1,6 @@
-- Create SVGs for the rest of the nodes
-- Create a map of which nodes need which params need which circle things
-- Create additional SVGs for params and settings and stuff
-- Phase out Array.prototype.remove
-- Write CanvasManager.clearNode
-- Implement connecting nodes
-- Update BiquadFilterNode sprite because it looks fugly
+ - add right-hand side panel for node + param property editing
+ - refactor nodes for true-to-sprite hitboxes incl. params and I/O
+ - interface for connecting nodes
+ - param automation menu
+ - full map playback
+ - audiobuffer editor?
